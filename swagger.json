@@ -135,12 +135,12 @@
           "name": "projectId",
           "in": "path",
           "required": true,
-          "description": "The ID of the project.",
+          "description": "The ID of the project",
           "type": "string"
         }
       ],
       "get": {
-        "description": "Get a project",
+        "description": "Get a project -- not yet implemented!",
         "tags": [
           "Projects"
         ],
@@ -178,7 +178,7 @@
         }
       },
       "patch": {
-        "description": "Update a project",
+        "description": "Update a project -- not yet implemented!",
         "tags": [
           "Projects"
         ],
@@ -427,7 +427,7 @@
         }
       ],
       "get": {
-        "description": "Get deeplink to project files",
+        "description": "Get deeplink to project files -- not yet implemented!",
         "tags": [
           "Project Files"
         ],
@@ -615,7 +615,7 @@
         }
       ],
       "get": {
-        "description": "List all members of a project",
+        "description": "List all members of a project -- not yet implemented!",
         "tags": [
           "Project Members"
         ],
@@ -667,7 +667,7 @@
         }
       },
       "post": {
-        "description": "Add members to a project",
+        "description": "Add members to a project -- not yet implemented!",
         "tags": [
           "Project Members"
         ],
@@ -740,7 +740,7 @@
         }
       ],
       "patch": {
-        "description": "Edit a member",
+        "description": "Edit a member -- not yet implemented!",
         "tags": [
           "Project Members"
         ],
@@ -789,7 +789,7 @@
         }
       },
       "delete": {
-        "description": "Remove a member from a project",
+        "description": "Remove a member from a project -- not yet implemented!",
         "tags": [
           "Project Members"
         ],
