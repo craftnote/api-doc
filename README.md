@@ -78,6 +78,7 @@ The folder of a file is referenced via the `folderId` field.
 }
 ```
 
+
 ## Managing Projects
 ### List all projects
 `GET /projects`
@@ -149,7 +150,9 @@ The folder of a file is referenced via the `folderId` field.
 ```
 
 
-## Managing Files
+## Managing Project Files
+INFO: This manages project files. Please be aware that a project also has a chat section which can have files. These files are not managed with the followin endpoints.
+
 ### List all files of a project
 `GET /projects/DB5B9A4D-7589-4AF4-8C79-A96A3B796DC9/files`
 ```json
