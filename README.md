@@ -6,6 +6,8 @@ The Craftnote API is currently only available in the Craftnote development envir
 
 In order to test the API, create an account here https://craftnote-development.firebaseapp.com and send us a short e-mail to th@craftnote.de. We will then create you an API key.
 
+Please note that during this development phase the base URL for the API is https://europe-west1-craftnote-development.cloudfunctions.net/api/v1
+
 ## Swagger Definition
 You can explore the API via the included [swagger definition](https://bitbucket.org/Craftnote/api-doc/raw/master/swagger.json). Simply navigate to [editor.swagger.io](https://editor.swagger.io), press File ▸ Import URL and enter the [URL of the swagger definition](https://bitbucket.org/Craftnote/api-doc/raw/master/swagger.json).
 
