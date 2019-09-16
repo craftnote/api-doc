@@ -1,0 +1,688 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Craftnote API",
+    "version": "0.2.1",
+    "description": "An API to manage projects, files and users in Craftnote.",
+    "contact": {
+      "name": "myCraftnote Digital GmbH",
+      "email": "th@craftnote.de",
+      "url": "https://www.craftnote.de"
+    },
+    "license": {
+      "name": "proprietary"
+    }
+  },
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "host": "api.craftnote.de",
+  "basePath": "/v1",
+  "schemes": [
+    "https"
+  ],
+  "securityDefinitions": {
+    "ApiKeyAuth": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "X-CN-API-Key"
+    }
+  },
+  "paths": {
+    "/projects": {
+      "get": {
+        "description": "List all projects for the authorized account",
+        "tags": [
+          "List projects"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "offset",
+            "type": "integer",
+            "description": "The number of items to skip."
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "type": "integer",
+            "description": "The numbers of items to return (maximum 100)."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List returned successfully",
+            "schema": {
+              "$ref": "#/definitions/ProjectsList"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "401": {
+            "description": "Unable to authorize",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "415": {
+            "description": "Invalid content type",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "default": {
+            "description": "unexpected error"
+          }
+        }
+      },
+      "post": {
+        "description": "Create a new project/project folder",
+        "tags": [
+          "Create new project"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "produces": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "The project details",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateProject"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Project successfully created",
+            "schema": {
+              "$ref": "#/definitions/ProjectLink"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "415": {
+            "description": "Invalid content type",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "default": {
+            "description": "unexpected server error"
+          }
+        }
+      }
+    },
+    "/projects/{projectId}/files": {
+      "parameters": [
+        {
+          "name": "projectId",
+          "in": "path",
+          "required": true,
+          "description": "The ID of the project.",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "description": "List all files of a project",
+        "tags": [
+          "List files"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "offset",
+            "type": "integer",
+            "description": "The number of items to skip."
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "type": "integer",
+            "description": "The numbers of items to return (maximum 100)."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List returned successfully",
+            "schema": {
+              "$ref": "#/definitions/FilesList"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "401": {
+            "description": "Not allowed to access this project ID",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "404": {
+            "description": "Project ID was not found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Create a file/folder",
+        "tags": [
+          "Upload file"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "produces": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "in": "formData",
+            "name": "type",
+            "type": "string",
+            "description": "The file type (folder, document, image)",
+            "required": true
+          },
+          {
+            "in": "formData",
+            "name": "folderId",
+            "type": "string",
+            "description": "The folder ID of the file"
+          },
+          {
+            "in": "formData",
+            "name": "data",
+            "type": "file",
+            "description": "The content data (required if type is not a folder)"
+          },
+          {
+            "in": "formData",
+            "name": "name",
+            "type": "string",
+            "description": "The name of the file (or folder) to create. If omitted the file name will be used. Required for creating a folder"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "File created successfully",
+            "schema": {
+              "$ref": "#/definitions/File"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "403": {
+            "description": "Not allowed to access this project ID",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "404": {
+            "description": "Project ID or folder ID were not found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "413": {
+            "description": "File size exceeds server limits",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/files/{fileId}": {
+      "parameters": [
+        {
+          "name": "fileId",
+          "in": "path",
+          "required": true,
+          "description": "The ID of the file.",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "description": "Get a file/folder",
+        "tags": [
+          "Get file"
+        ],
+        "produces": [
+          "application/json",
+          "image/json",
+          "image/png",
+          "application/pdf"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "download",
+            "type": "boolean",
+            "description": "Whether to download this file. If selected the response will contain the file content instead of its meta data."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "File returned successfully",
+            "schema": {
+              "$ref": "#/definitions/File"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "401": {
+            "description": "Not allowed to access the project this file is associated with",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "404": {
+            "description": "File ID was not found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "413": {
+            "description": "File size exceeds server limits",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Update a file/folder",
+        "tags": [
+          "Update file"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "produces": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "in": "formData",
+            "name": "folderId",
+            "type": "string",
+            "description": "The folder ID of the file"
+          },
+          {
+            "in": "formData",
+            "name": "data",
+            "type": "file",
+            "description": "The content data"
+          },
+          {
+            "in": "formData",
+            "name": "name",
+            "type": "string",
+            "description": "The name of the new file (or folder)"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "File updated successfully",
+            "schema": {
+              "$ref": "#/definitions/File"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "401": {
+            "description": "Not allowed to access the project this file is associated with",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "404": {
+            "description": "Project ID or folder ID were not found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "413": {
+            "description": "File size exceeds server limits",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Error": {
+      "type": "object",
+      "required": [
+        "message"
+      ],
+      "properties": {
+        "message": {
+          "type": "string",
+          "description": "A message describing the error",
+          "example": "An error occured."
+        }
+      }
+    },
+    "Contact": {
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The name of the contact",
+          "example": "Herr Maier",
+          "pattern": "^[a-zA-ZäÄöÖüÜß ]+([ -][a-zA-ZäÄöÖüÜß ]+)*$"
+        },
+        "emails": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "The email of the contact",
+          "example": [
+            "maier@test.de",
+            "maier2@test.de"
+          ],
+          "pattern": "^(([^<>()\\[\\]\\\\.,;:\\s@\"]+(\\.[^<>()\\[\\]\\\\.,;:\\s@\"]+)*)|(\".+\"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$"
+        },
+        "phones": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "The phone of the contact",
+          "example": [
+            "+49 711 21893732",
+            "+49 711 21893733"
+          ],
+          "pattern": "[0-9 +]+"
+        }
+      }
+    },
+    "CreateProject": {
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of this project",
+          "example": "Wasserrohrbruch"
+        },
+        "projectType": {
+          "type": "string",
+          "description": "The project type (folder|project)",
+          "example": "folder"
+        },
+        "orderNumber": {
+          "type": "string",
+          "description": "Order number for this project",
+          "example": "12312344d"
+        },
+        "street": {
+          "type": "string",
+          "description": "Street address of this project",
+          "pattern": "[a-zA-ZßäöüÄÖÜ .\\\\/-]+[ ]?[0-9a-zA-ZßäöüÄÖÜ \\\\/-]*$",
+          "example": "Bahnhofstr. 12"
+        },
+        "zipcode": {
+          "type": "string",
+          "description": "ZIP code of this project",
+          "pattern": "^[0-9a-zA-ZäÄöÖüÜß ]{4,}$",
+          "example": 70174
+        },
+        "city": {
+          "type": "string",
+          "description": "Name of the city of this project",
+          "pattern": "[a-zA-ZäöüÄÖÜß .\\\\\\\\/-]+",
+          "example": "Stuttgart"
+        },
+        "contacts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Contact"
+          },
+          "description": "Contacts for this project"
+        },
+        "billingCity": {
+          "type": "string",
+          "description": "Billing city of this project",
+          "example": "Stuttgart",
+          "pattern": "[a-zA-ZäöüÄÖÜß .\\\\\\\\/-]+"
+        },
+        "parentProject": {
+          "type": "string",
+          "description": "The ID of the parent project",
+          "example": "db5b9a4d-7589-4af4-8c79-a96a3b796dc9"
+        }
+      }
+    },
+    "Project": {
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of this project",
+          "example": "Wasserrohrbruch"
+        },
+        "id": {
+          "type": "string",
+          "description": "Unique project ID",
+          "example": "0000FFB2-9DC1-4A50-A8BB-14C899CC52FC"
+        },
+        "projectType": {
+          "type": "string",
+          "description": "The project type (folder|project)",
+          "example": "folder"
+        },
+        "orderNumber": {
+          "type": "string",
+          "description": "Order number for this project",
+          "example": "12312344d"
+        },
+        "street": {
+          "type": "string",
+          "description": "Street address of this project",
+          "pattern": "[a-zA-ZßäöüÄÖÜ .\\\\/-]+[ ]?[0-9a-zA-ZßäöüÄÖÜ \\\\/-]*$",
+          "example": "Bahnhofstr. 12"
+        },
+        "zipcode": {
+          "type": "string",
+          "description": "ZIP code of this project",
+          "pattern": "^[0-9a-zA-ZäÄöÖüÜß ]{4,}$",
+          "example": 70174
+        },
+        "city": {
+          "type": "string",
+          "description": "Name of the city of this project",
+          "pattern": "[a-zA-ZäöüÄÖÜß .\\\\\\\\/-]+",
+          "example": "Stuttgart"
+        },
+        "contacts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Contact"
+          },
+          "description": "Contacts for this project"
+        },
+        "billingCity": {
+          "type": "string",
+          "description": "Billing city of this projeect",
+          "example": "Stuttgart",
+          "pattern": "[a-zA-ZäöüÄÖÜß .\\\\\\\\/-]+"
+        },
+        "projects": {
+          "type": "array",
+          "description": "IDs of projects contained in this project (only applies to type folder)",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "ProjectsList": {
+      "type": "object",
+      "required": [
+        "projects"
+      ],
+      "properties": {
+        "projects": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Project"
+          }
+        }
+      }
+    },
+    "ProjectLink": {
+      "type": "object",
+      "required": [
+        "webLink",
+        "appDeepLink"
+      ],
+      "properties": {
+        "webLink": {
+          "type": "string",
+          "description": "The link to the created project which can be opened in a browser",
+          "example": "https://app.mycraftnote.de/#/project?id=0DDAAAA9-2508-4AAF-A576-E91E76EA8CDB"
+        },
+        "appDeepLink": {
+          "type": "string",
+          "description": "The deeplink to the created project which can be opened in a mobile client",
+          "example": "mycrafty://project?id=0DDAAAA9-2508-4AAF-A576-E91E76EA8CDB"
+        }
+      }
+    },
+    "File": {
+      "type": "object",
+      "required": [
+        "id",
+        "name",
+        "type"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The unique ID of the file",
+          "example": "00061E3C-9C02-3CE5-EDFD-9186E6F28114"
+        },
+        "projectId": {
+          "type": "string",
+          "description": "The project ID of this file",
+          "example": "db5b9a4d-7589-4af4-8c79-a96a3b796dc9"
+        },
+        "name": {
+          "type": "string",
+          "description": "The user-defined file name",
+          "example": "Projektbericht.pdf"
+        },
+        "folderId": {
+          "type": "string",
+          "description": "The parent folder ID of this file",
+          "example": "00061E3C-9C02-3CE5-EDFD-9186E6F28114"
+        },
+        "type": {
+          "type": "string",
+          "description": "The file type (folder, document, image)",
+          "example": "document"
+        },
+        "creationTimestamp": {
+          "type": "string",
+          "description": "The creation timestamp as UNIX date",
+          "example": 1567685998
+        },
+        "size": {
+          "type": "number",
+          "description": "The file size in bytes",
+          "example": 2450
+        }
+      }
+    },
+    "FilesList": {
+      "type": "object",
+      "required": [
+        "files"
+      ],
+      "properties": {
+        "files": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/File"
+          }
+        }
+      }
+    }
+  }
+}
