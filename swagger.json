@@ -36,7 +36,7 @@
       "get": {
         "description": "List all projects for the authorized account",
         "tags": [
-          "List projects"
+          "Projects"
         ],
         "parameters": [
           {
@@ -78,20 +78,14 @@
             }
           },
           "default": {
-            "description": "unexpected error"
+            "description": "Unexpected error"
           }
         }
       },
       "post": {
         "description": "Create a new project/project folder",
         "tags": [
-          "Create new project"
-        ],
-        "consumes": [
-          "multipart/form-data"
-        ],
-        "produces": [
-          "multipart/form-data"
+          "Projects"
         ],
         "parameters": [
           {
@@ -100,7 +94,7 @@
             "description": "The project details",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/CreateProject"
+              "$ref": "#/definitions/ChangeProject"
             }
           }
         ],
@@ -108,7 +102,7 @@
           "200": {
             "description": "Project successfully created",
             "schema": {
-              "$ref": "#/definitions/ProjectLink"
+              "$ref": "#/definitions/Project"
             }
           },
           "400": {
@@ -130,7 +124,154 @@
             }
           },
           "default": {
-            "description": "unexpected server error"
+            "description": "Unexpected error"
+          }
+        }
+      }
+    },
+    "/projects/{projectId}": {
+      "parameters": [
+        {
+          "name": "projectId",
+          "in": "path",
+          "required": true,
+          "description": "The ID of the project.",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "description": "Get a project",
+        "tags": [
+          "Projects"
+        ],
+        "responses": {
+          "200": {
+            "description": "Project returned succesfully",
+            "schema": {
+              "$ref": "#/definitions/Project"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "401": {
+            "description": "Not allowed to access this project ID",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "404": {
+            "description": "Project ID was not found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "patch": {
+        "description": "Update a project",
+        "tags": [
+          "Projects"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "The project details",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ChangeProject"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List returned successfully",
+            "schema": {
+              "$ref": "#/definitions/FilesList"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "401": {
+            "description": "Not allowed to access this project ID",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "404": {
+            "description": "Project ID was not found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/projects/{projectId}/deeplink": {
+      "parameters": [
+        {
+          "name": "projectId",
+          "in": "path",
+          "required": true,
+          "description": "The ID of the project.",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "description": "Get project deeplink",
+        "tags": [
+          "Projects"
+        ],
+        "responses": {
+          "200": {
+            "description": "Project deeplink returned succesfully",
+            "schema": {
+              "$ref": "#/definitions/Deeplink"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "401": {
+            "description": "Not allowed to access this project ID",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "404": {
+            "description": "Project ID was not found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
           }
         }
       }
@@ -148,7 +289,7 @@
       "get": {
         "description": "List all files of a project",
         "tags": [
-          "List files"
+          "Project Files"
         ],
         "parameters": [
           {
@@ -190,7 +331,7 @@
             }
           },
           "default": {
-            "description": "unexpected error",
+            "description": "Unexpected error",
             "schema": {
               "$ref": "#/definitions/Error"
             }
@@ -200,7 +341,7 @@
       "post": {
         "description": "Create a file/folder",
         "tags": [
-          "Upload file"
+          "Project Files"
         ],
         "consumes": [
           "multipart/form-data"
@@ -267,7 +408,56 @@
             }
           },
           "default": {
-            "description": "unexpected error",
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/projects/{projectId}/files/deeplink": {
+      "parameters": [
+        {
+          "name": "projectId",
+          "in": "path",
+          "required": true,
+          "description": "The ID of the project.",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "description": "Get deeplink to project files",
+        "tags": [
+          "Project Files"
+        ],
+        "responses": {
+          "200": {
+            "description": "List returned successfully",
+            "schema": {
+              "$ref": "#/definitions/Deeplink"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "401": {
+            "description": "Not allowed to access this project ID",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "404": {
+            "description": "Project ID was not found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
             "schema": {
               "$ref": "#/definitions/Error"
             }
@@ -288,7 +478,7 @@
       "get": {
         "description": "Get a file/folder",
         "tags": [
-          "Get file"
+          "Project Files"
         ],
         "produces": [
           "application/json",
@@ -336,7 +526,7 @@
             }
           },
           "default": {
-            "description": "unexpected error",
+            "description": "Unexpected error",
             "schema": {
               "$ref": "#/definitions/Error"
             }
@@ -346,7 +536,7 @@
       "put": {
         "description": "Update a file/folder",
         "tags": [
-          "Update file"
+          "Project Files"
         ],
         "consumes": [
           "multipart/form-data"
@@ -406,7 +596,227 @@
             }
           },
           "default": {
-            "description": "unexpected error",
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/projects/{projectId}/members": {
+      "parameters": [
+        {
+          "name": "projectId",
+          "in": "path",
+          "required": true,
+          "description": "The ID of the project.",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "description": "List all members of a project",
+        "tags": [
+          "Project Members"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "offset",
+            "type": "integer",
+            "description": "The number of items to skip."
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "type": "integer",
+            "description": "The numbers of items to return (maximum 100)."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List returned successfully",
+            "schema": {
+              "$ref": "#/definitions/MembersList"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "401": {
+            "description": "Not allowed to access this project ID",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "404": {
+            "description": "Project ID was not found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Add members to a project",
+        "tags": [
+          "Project Members"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "The members to add",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/AddMembersList"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Members added successfully",
+            "schema": {
+              "$ref": "#/definitions/MembersList"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "403": {
+            "description": "Not allowed to access this project ID or edit members",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "404": {
+            "description": "Project ID or folder ID were not found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "413": {
+            "description": "File size exceeds server limits",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/projects/{projectId}/members/{memberId}": {
+      "parameters": [
+        {
+          "name": "projectId",
+          "in": "path",
+          "required": true,
+          "description": "The ID of the project.",
+          "type": "string"
+        },
+        {
+          "name": "memberId",
+          "in": "path",
+          "required": true,
+          "description": "The ID of the member.",
+          "type": "string"
+        }
+      ],
+      "patch": {
+        "description": "Edit a member",
+        "tags": [
+          "Project Members"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "The member details to change",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ChangeMember"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Member changed succesfully",
+            "schema": {
+              "$ref": "#/definitions/Member"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "401": {
+            "description": "Not allowed to access this project ID or edit members",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "404": {
+            "description": "Project ID or member ID were not found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Remove a member from a project",
+        "tags": [
+          "Project Members"
+        ],
+        "responses": {
+          "204": {
+            "description": "Member removed succesfully"
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "401": {
+            "description": "Not allowed to access this project ID or edit members",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "404": {
+            "description": "Project ID or member ID were not found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
             "schema": {
               "$ref": "#/definitions/Error"
             }
@@ -467,7 +877,7 @@
         }
       }
     },
-    "CreateProject": {
+    "ChangeProject": {
       "type": "object",
       "required": [
         "name"
@@ -606,7 +1016,7 @@
         }
       }
     },
-    "ProjectLink": {
+    "Deeplink": {
       "type": "object",
       "required": [
         "webLink",
@@ -615,12 +1025,12 @@
       "properties": {
         "webLink": {
           "type": "string",
-          "description": "The link to the created project which can be opened in a browser",
+          "description": "A link that can be opened in a browser",
           "example": "https://app.mycraftnote.de/#/project?id=0DDAAAA9-2508-4AAF-A576-E91E76EA8CDB"
         },
         "appDeepLink": {
           "type": "string",
-          "description": "The deeplink to the created project which can be opened in a mobile client",
+          "description": "A link that can be opened in a mobile client",
           "example": "mycrafty://project?id=0DDAAAA9-2508-4AAF-A576-E91E76EA8CDB"
         }
       }
@@ -681,6 +1091,96 @@
           "items": {
             "$ref": "#/definitions/File"
           }
+        }
+      }
+    },
+    "Member": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The unique ID of the member",
+          "example": "Ka3gh32ashtQJuuas9"
+        },
+        "email": {
+          "type": "string",
+          "description": "The e-mail address of the member",
+          "example": "cf@gauss.de"
+        },
+        "name": {
+          "type": "string",
+          "description": "The name of this member",
+          "example": "Carl-Friedrich"
+        },
+        "lastname": {
+          "type": "string",
+          "description": "The last name of this member",
+          "example": "Gauss"
+        },
+        "role": {
+          "type": "string",
+          "description": "The role this member has in a project",
+          "example": "OWNER"
+        }
+      }
+    },
+    "MembersList": {
+      "type": "object",
+      "required": [
+        "members"
+      ],
+      "properties": {
+        "members": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Member"
+          }
+        }
+      }
+    },
+    "AddMember": {
+      "type": "object",
+      "required": [
+        "id",
+        "role"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The unique ID of the member",
+          "example": "Ka3gh32ashtQJuuas9"
+        },
+        "role": {
+          "type": "string",
+          "description": "The role this member has in a project",
+          "example": "OWNER"
+        }
+      }
+    },
+    "AddMembersList": {
+      "type": "object",
+      "required": [
+        "members"
+      ],
+      "properties": {
+        "members": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AddMember"
+          }
+        }
+      }
+    },
+    "ChangeMember": {
+      "type": "object",
+      "required": [
+        "role"
+      ],
+      "properties": {
+        "role": {
+          "type": "string",
+          "description": "The role this member has in a project",
+          "example": "OWNER"
         }
       }
     }

@@ -78,6 +78,16 @@ The folder of a file is referenced via the `folderId` field.
 }
 ```
 
+### Deeplink
+A deeplink is a collection of links that can be used to access a specific section from the mobile app or the website.
+ **Example**
+ ```json
+{
+  "webLink": "https://app.mycraftnote.de/#/project?id=0DDAAAA9-2508-4AAF-A576-E91E76EA8CDB",
+  "appDeepLink": "mycrafty://project?id=0DDAAAA9-2508-4AAF-A576-E91E76EA8CDB"
+}
+ ```
+
 
 ## Managing Projects
 ### List all projects
@@ -113,6 +123,40 @@ The folder of a file is referenced via the `folderId` field.
         ]
     }
   ]
+}
+```
+
+### Get an individual project
+`GET /projects/03AE0AA1-B699-4A9C-85BE-30328897446B`
+```json
+{
+    "id": "03AE0AA1-B699-4A9C-85BE-30328897446B",
+    "name": "MyProject",
+    "projectType": "FOLDER",
+    "orderNumber": "12312344d",
+    "street": "Unter den Linden",
+    "zipcode": "10234",
+    "city": "Berlin",
+    "contacts": [
+    {
+      "name": "Max Mustermann",
+      "emails": ["mm@test.de"],
+      "phones": ["+49 711 21893732"]
+    }
+    ],
+    "billingCity": "Berlin",
+    "parentProject": "46B6D771-492E-4841-8D0C-012328BB1031"
+}
+```
+
+### Get a project deeplink
+**UPCOMING FEATURE**
+
+`GET /projects/03AE0AA1-B699-4A9C-85BE-30328897446B/deeplink`
+```json
+{
+  "webLink": "https://app.mycraftnote.de/#/project?id=0DDAAAA9-2508-4AAF-A576-E91E76EA8CDB",
+  "appDeepLink": "mycrafty://project?id=0DDAAAA9-2508-4AAF-A576-E91E76EA8CDB"
 }
 ```
 
@@ -177,6 +221,18 @@ INFO: This manages project files. Please be aware that a project also has a chat
     ]
 }
 ```
+
+### Get a deeplink to project files
+**UPCOMING FEATURE**
+
+`GET /projects/DB5B9A4D-7589-4AF4-8C79-A96A3B796DC9/files/deeplink`
+```json
+{
+  "webLink": "https://app.mycraftnote.de/#/project?id=0DDAAAA9-2508-4AAF-A576-E91E76EA8CDB/files",
+  "appDeepLink": "mycrafty://files?projectId=0DDAAAA9-2508-4AAF-A576-E91E76EA8CDB"
+}
+```
+
 
 ### Get individual file
 `GET /files/7811C21D-AC17-479F-9C2D-D6AC6AF0F1C0`
