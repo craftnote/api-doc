@@ -32,6 +32,100 @@
     }
   },
   "paths": {
+    "/company/employees": {
+      "get": {
+        "description": "List employees of the company associated with the API key -- not yet implemented!",
+        "tags": [
+          "Company Employees (draft)"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "offset",
+            "type": "integer",
+            "description": "The number of items to skip."
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "type": "integer",
+            "description": "The numbers of items to return (maximum 100)."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List returned successfully",
+            "schema": {
+              "$ref": "#/definitions/EmployeesList"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "401": {
+            "description": "Unable to authorize",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "415": {
+            "description": "Invalid content type",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "default": {
+            "description": "Unexpected error"
+          }
+        }
+      },
+      "post": {
+        "description": "Invite employees -- not yet implemented!",
+        "tags": [
+          "Company Employees (draft)"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "The employees to invite",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/InviteEmployeesList"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Invites sent"
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "415": {
+            "description": "Invalid content type",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "default": {
+            "description": "Unexpected error"
+          }
+        }
+      }
+    },
     "/projects": {
       "get": {
         "description": "List all projects for the authorized account",
@@ -617,7 +711,7 @@
       "get": {
         "description": "List all members of a project -- not yet implemented!",
         "tags": [
-          "Project Members"
+          "Project Members (draft)"
         ],
         "parameters": [
           {
@@ -669,7 +763,7 @@
       "post": {
         "description": "Add members to a project -- not yet implemented!",
         "tags": [
-          "Project Members"
+          "Project Members (draft)"
         ],
         "parameters": [
           {
@@ -742,7 +836,7 @@
       "patch": {
         "description": "Edit a member -- not yet implemented!",
         "tags": [
-          "Project Members"
+          "Project Members (draft)"
         ],
         "parameters": [
           {
@@ -791,7 +885,7 @@
       "delete": {
         "description": "Remove a member from a project -- not yet implemented!",
         "tags": [
-          "Project Members"
+          "Project Members (draft)"
         ],
         "responses": {
           "204": {
@@ -1065,8 +1159,8 @@
         },
         "type": {
           "type": "string",
-          "description": "The file type (folder, document, image)",
-          "example": "document"
+          "description": "The file type (FOLDER, DOCUMENT, IMAGE, AUDIO, VIDEO)",
+          "example": "DOCUMENT"
         },
         "creationTimestamp": {
           "type": "string",
@@ -1181,6 +1275,84 @@
           "type": "string",
           "description": "The role this member has in a project",
           "example": "OWNER"
+        }
+      }
+    },
+    "Employee": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The unique ID of the employee",
+          "example": "Ka3gh32ashtQJuuas9"
+        },
+        "email": {
+          "type": "string",
+          "description": "The e-mail address of the employee",
+          "example": "cf@gauss.de"
+        },
+        "name": {
+          "type": "string",
+          "description": "The name of this employee",
+          "example": "Carl-Friedrich"
+        },
+        "lastname": {
+          "type": "string",
+          "description": "The last name of this employee",
+          "example": "Gauss"
+        },
+        "jobTitle": {
+          "type": "string",
+          "description": "The job title of this employee",
+          "example": "Mathematician"
+        }
+      }
+    },
+    "EmployeesList": {
+      "type": "object",
+      "required": [
+        "members"
+      ],
+      "properties": {
+        "members": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Employee"
+          }
+        }
+      }
+    },
+    "InviteEmployee": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The unique ID of this employee",
+          "example": "Ka3gh32ashtQJuuas9"
+        },
+        "email": {
+          "type": "string",
+          "description": "The e-mail address",
+          "example": "cf@gauss.de"
+        },
+        "phone": {
+          "type": "string",
+          "description": "The phone number",
+          "example": 49171199132
+        }
+      }
+    },
+    "InviteEmployeesList": {
+      "type": "object",
+      "required": [
+        "members"
+      ],
+      "properties": {
+        "members": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/InviteEmployeesList"
+          }
         }
       }
     }
