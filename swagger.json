@@ -987,28 +987,45 @@
           "description": "The project type (folder|project)",
           "example": "folder"
         },
-        "orderNumber": {
-          "type": "string",
-          "description": "Order number for this project",
-          "example": "12312344d"
-        },
         "street": {
           "type": "string",
-          "description": "Street address of this project",
-          "pattern": "[a-zA-ZßäöüÄÖÜ .\\\\/-]+[ ]?[0-9a-zA-ZßäöüÄÖÜ \\\\/-]*$",
-          "example": "Bahnhofstr. 12"
+          "description": "The street address of this project",
+          "example": "Manteuffelstr. 40"
         },
         "zipcode": {
           "type": "string",
           "description": "ZIP code of this project",
-          "pattern": "^[0-9a-zA-ZäÄöÖüÜß ]{4,}$",
-          "example": 70174
+          "example": "12345"
         },
         "city": {
           "type": "string",
           "description": "Name of the city of this project",
-          "pattern": "[a-zA-ZäöüÄÖÜß .\\\\\\\\/-]+",
-          "example": "Stuttgart"
+          "example": "Berlin"
+        },
+        "county": {
+          "type": "string",
+          "description": "Name of the country",
+          "example": "Germany"
+        },
+        "billingName": {
+          "type": "string",
+          "description": "The name of the billing contact",
+          "example": "Hornberger"
+        },
+        "billingEmail": {
+          "type": "string",
+          "description": "The e-mail address of the billing contact",
+          "example": "foo@bar.com"
+        },
+        "billingStreet": {
+          "type": "string",
+          "description": "The street and address number of the billing conctact",
+          "example": "Manteuffelstr. 40"
+        },
+        "billingCity": {
+          "type": "string",
+          "description": "The city of the billing contact",
+          "example": "Berlin"
         },
         "contacts": {
           "type": "array",
@@ -1016,12 +1033,6 @@
             "$ref": "#/definitions/Contact"
           },
           "description": "Contacts for this project"
-        },
-        "billingCity": {
-          "type": "string",
-          "description": "Billing city of this project",
-          "example": "Stuttgart",
-          "pattern": "[a-zA-ZäöüÄÖÜß .\\\\\\\\/-]+"
         },
         "parentProject": {
           "type": "string",
@@ -1036,15 +1047,15 @@
         "name"
       ],
       "properties": {
-        "name": {
-          "type": "string",
-          "description": "Name of this project",
-          "example": "Wasserrohrbruch"
-        },
         "id": {
           "type": "string",
           "description": "Unique project ID",
           "example": "0000FFB2-9DC1-4A50-A8BB-14C899CC52FC"
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of this project",
+          "example": "Wasserrohrbruch"
         },
         "projectType": {
           "type": "string",
@@ -1058,21 +1069,43 @@
         },
         "street": {
           "type": "string",
-          "description": "Street address of this project",
-          "pattern": "[a-zA-ZßäöüÄÖÜ .\\\\/-]+[ ]?[0-9a-zA-ZßäöüÄÖÜ \\\\/-]*$",
-          "example": "Bahnhofstr. 12"
+          "description": "The street address of this project",
+          "example": "Manteuffelstr. 40"
         },
         "zipcode": {
           "type": "string",
           "description": "ZIP code of this project",
-          "pattern": "^[0-9a-zA-ZäÄöÖüÜß ]{4,}$",
-          "example": 70174
+          "example": "12345"
         },
         "city": {
           "type": "string",
           "description": "Name of the city of this project",
-          "pattern": "[a-zA-ZäöüÄÖÜß .\\\\\\\\/-]+",
-          "example": "Stuttgart"
+          "example": "Berlin"
+        },
+        "county": {
+          "type": "string",
+          "description": "Name of the country",
+          "example": "Germany"
+        },
+        "billingName": {
+          "type": "string",
+          "description": "The name of the billing contact",
+          "example": "Hornberger"
+        },
+        "billingEmail": {
+          "type": "string",
+          "description": "The e-mail address of the billing contact",
+          "example": "foo@bar.com"
+        },
+        "billingStreet": {
+          "type": "string",
+          "description": "The street and address number of the billing conctact",
+          "example": "Manteuffelstr. 40"
+        },
+        "billingCity": {
+          "type": "string",
+          "description": "The city of the billing contact",
+          "example": "Berlin"
         },
         "contacts": {
           "type": "array",
@@ -1080,12 +1113,6 @@
             "$ref": "#/definitions/Contact"
           },
           "description": "Contacts for this project"
-        },
-        "billingCity": {
-          "type": "string",
-          "description": "Billing city of this projeect",
-          "example": "Stuttgart",
-          "pattern": "[a-zA-ZäöüÄÖÜß .\\\\\\\\/-]+"
         },
         "projects": {
           "type": "array",
