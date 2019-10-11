@@ -48,6 +48,7 @@ Folders keep links to their contained projects with the field `projects` that co
     "parentProject": "DB5B9A4D-7589-4AF4-8C79-A96A3B796DC9"
 }
 ```
+Please refer to the swagger definition for a full list of available fields.
 
 ### Files
 A project of type `projectType: project` has a file section where users can upload files. Like with projects, files can organized in folders.

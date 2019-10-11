@@ -987,6 +987,11 @@
           "description": "The project type (folder|project)",
           "example": "folder"
         },
+        "orderNumber": {
+          "type": "string",
+          "description": "An arbitrary order number",
+          "example": "92a032as4.853-af62"
+        },
         "street": {
           "type": "string",
           "description": "The street address of this project",
@@ -1002,7 +1007,7 @@
           "description": "Name of the city of this project",
           "example": "Berlin"
         },
-        "county": {
+        "country": {
           "type": "string",
           "description": "Name of the country",
           "example": "Germany"
@@ -1012,20 +1017,25 @@
           "description": "The name of the billing contact",
           "example": "Hornberger"
         },
-        "billingEmail": {
-          "type": "string",
-          "description": "The e-mail address of the billing contact",
-          "example": "foo@bar.com"
-        },
         "billingStreet": {
           "type": "string",
           "description": "The street and address number of the billing conctact",
           "example": "Manteuffelstr. 40"
         },
+        "billingZipcode": {
+          "type": "string",
+          "description": "ZIP code of the billing contact",
+          "example": "12345"
+        },
         "billingCity": {
           "type": "string",
           "description": "The city of the billing contact",
           "example": "Berlin"
+        },
+        "billingEmail": {
+          "type": "string",
+          "description": "The e-mail address of the billing contact",
+          "example": "foo@bar.com"
         },
         "contacts": {
           "type": "array",
