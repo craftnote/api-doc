@@ -3,7 +3,6 @@ The Craftnote API allows you to manage data in Craftnote via a HTTP REST API.
 
 ## Development
 Please notice that the current base URL is https://europe-west1-craftnote-live.cloudfunctions.net/api/v1
-We will activate api.craftnote.de shortly.
 
 ## Swagger Definition
 You can explore the API via the included [swagger definition](https://bitbucket.org/Craftnote/api-doc/raw/master/swagger.json). Simply navigate to [editor.swagger.io](https://editor.swagger.io), press File ▸ Import URL and enter the [URL of the swagger definition](https://bitbucket.org/Craftnote/api-doc/raw/master/swagger.json).
