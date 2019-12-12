@@ -19,8 +19,8 @@
   "produces": [
     "application/json"
   ],
-  "host": "api.craftnote.de",
-  "basePath": "/v1",
+  "host": "https://europe-west1-craftnote-live.cloudfunctions.net",
+  "basePath": "/api/v1",
   "schemes": [
     "https"
   ],
