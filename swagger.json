@@ -1069,8 +1069,8 @@
         },
         "projectType": {
           "type": "string",
-          "description": "The project type (folder|project)",
-          "example": "folder"
+          "description": "The project type (FOLDER|PROJECT)",
+          "example": "FOLDER"
         },
         "orderNumber": {
           "type": "string",
