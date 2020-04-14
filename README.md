@@ -105,7 +105,8 @@ A deeplink is a collection of links that can be used to access a specific sectio
         }
         ],
         "billingCity": "Berlin",
-        "parentProject": "46B6D771-492E-4841-8D0C-012328BB1031"
+        "parentProject": "46B6D771-492E-4841-8D0C-012328BB1031",
+        "archived": false
     },
     {
         "id": "46B6D771-492E-4841-8D0C-012328BB1031",
@@ -114,11 +115,13 @@ A deeplink is a collection of links that can be used to access a specific sectio
         "projectType": "FOLDER",
         "projects": [
             "03AE0AA1-B699-4A9C-85BE-30328897446B"
-        ]
+        ],
+        "archived": true
     }
   ]
 }
 ```
+The `archived` flag shows if a project is archived for all non-external members.
 
 ### Get an individual project
 `GET /projects/03AE0AA1-B699-4A9C-85BE-30328897446B`
@@ -139,7 +142,8 @@ A deeplink is a collection of links that can be used to access a specific sectio
     }
     ],
     "billingCity": "Berlin",
-    "parentProject": "46B6D771-492E-4841-8D0C-012328BB1031"
+    "parentProject": "46B6D771-492E-4841-8D0C-012328BB1031",
+    "archived": false
 }
 ```
 
@@ -197,6 +201,12 @@ A deeplink is a collection of links that can be used to access a specific sectio
 }
 ```
 
+You can archive projects for all non-external members by setting the `archived` flag in an update request:
+```
+...
+"archived": true
+...
+```
 
 ## Managing Project Files
 INFO: This manages project files. Please be aware that a project also has a chat section which can have files. These files are not managed with the followin endpoints.
