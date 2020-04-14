@@ -3,10 +3,10 @@
   "info": {
     "title": "Craftnote API",
     "version": "0.2.1",
-    "description": "An API to manage projects, files and users in Craftnote.",
+    "description": "API to manage projects, files and users in Craftnote.",
     "contact": {
       "name": "myCraftnote Digital GmbH",
-      "email": "th@craftnote.de",
+      "email": "support@craftnote.de",
       "url": "https://www.craftnote.de"
     },
     "license": {
@@ -19,7 +19,7 @@
   "produces": [
     "application/json"
   ],
-  "host": "https://europe-west1-craftnote-live.cloudfunctions.net",
+  "host": "europe-west1-craftnote-live.cloudfunctions.net",
   "basePath": "/api/v1",
   "schemes": [
     "https"
@@ -32,24 +32,24 @@
     }
   },
   "paths": {
-    "/company/employees": {
+    "/company/employees (DRAFT)": {
       "get": {
-        "description": "List employees of the company associated with the API key -- not yet implemented!",
+        "description": "List employees of the company associated with the API key. This is a draft and not implemented yet!",
         "tags": [
-          "Company Employees (draft)"
+          "Company Employees (DRAFT)"
         ],
         "parameters": [
           {
             "in": "query",
             "name": "offset",
             "type": "integer",
-            "description": "The number of items to skip."
+            "description": "Number of items to skip"
           },
           {
             "in": "query",
             "name": "limit",
             "type": "integer",
-            "description": "The numbers of items to return (maximum 100)."
+            "description": "Numbers of items to return (maximum 100)"
           }
         ],
         "responses": {
@@ -83,15 +83,15 @@
         }
       },
       "post": {
-        "description": "Invite employees -- not yet implemented!",
+        "description": "Invite employees. This is a draft and not implemented yet!",
         "tags": [
-          "Company Employees (draft)"
+          "Company Employees (DRAFT)"
         ],
         "parameters": [
           {
             "in": "body",
             "name": "body",
-            "description": "The employees to invite",
+            "description": "Employees to invite",
             "required": true,
             "schema": {
               "$ref": "#/definitions/InviteEmployeesList"
@@ -128,7 +128,7 @@
     },
     "/projects": {
       "get": {
-        "description": "List all projects for the authorized account",
+        "description": "List all projects of the company.",
         "tags": [
           "Projects"
         ],
@@ -137,13 +137,13 @@
             "in": "query",
             "name": "offset",
             "type": "integer",
-            "description": "The number of items to skip."
+            "description": "Number of items to skip"
           },
           {
             "in": "query",
             "name": "limit",
             "type": "integer",
-            "description": "The numbers of items to return (maximum 100)."
+            "description": "Numbers of items to return (maximum 100)"
           }
         ],
         "responses": {
@@ -177,7 +177,7 @@
         }
       },
       "post": {
-        "description": "Create a new project/project folder",
+        "description": "Create new project/folder",
         "tags": [
           "Projects"
         ],
@@ -185,10 +185,10 @@
           {
             "in": "body",
             "name": "body",
-            "description": "The project details",
+            "description": "Project data",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/ChangeProject"
+              "$ref": "#/definitions/CreateProject"
             }
           }
         ],
@@ -229,12 +229,12 @@
           "name": "projectId",
           "in": "path",
           "required": true,
-          "description": "The ID of the project",
+          "description": "ID of the project",
           "type": "string"
         }
       ],
       "get": {
-        "description": "Get a project -- not yet implemented!",
+        "description": "Retrieve individual project",
         "tags": [
           "Projects"
         ],
@@ -252,7 +252,7 @@
             }
           },
           "401": {
-            "description": "Not allowed to access this project ID",
+            "description": "Not allowed to access this project",
             "schema": {
               "$ref": "#/definitions/Error"
             }
@@ -271,8 +271,8 @@
           }
         }
       },
-      "patch": {
-        "description": "Update a project -- not yet implemented!",
+      "put": {
+        "description": "Update project",
         "tags": [
           "Projects"
         ],
@@ -280,18 +280,18 @@
           {
             "in": "body",
             "name": "body",
-            "description": "The project details",
+            "description": "Project data",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/ChangeProject"
+              "$ref": "#/definitions/CreateProject"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "List returned successfully",
+            "description": "Project updated successfully",
             "schema": {
-              "$ref": "#/definitions/FilesList"
+              "$ref": "#/definitions/Project"
             }
           },
           "400": {
@@ -301,7 +301,7 @@
             }
           },
           "401": {
-            "description": "Not allowed to access this project ID",
+            "description": "Not allowed to update this project",
             "schema": {
               "$ref": "#/definitions/Error"
             }
@@ -327,12 +327,12 @@
           "name": "projectId",
           "in": "path",
           "required": true,
-          "description": "The ID of the project.",
+          "description": "ID of the project",
           "type": "string"
         }
       ],
       "get": {
-        "description": "Get project deeplink",
+        "description": "Retrieve a project deeplink",
         "tags": [
           "Projects"
         ],
@@ -350,7 +350,7 @@
             }
           },
           "401": {
-            "description": "Not allowed to access this project ID",
+            "description": "Not allowed to access this project",
             "schema": {
               "$ref": "#/definitions/Error"
             }
@@ -376,7 +376,7 @@
           "name": "projectId",
           "in": "path",
           "required": true,
-          "description": "The ID of the project.",
+          "description": "ID of the project",
           "type": "string"
         }
       ],
@@ -390,13 +390,13 @@
             "in": "query",
             "name": "offset",
             "type": "integer",
-            "description": "The number of items to skip."
+            "description": "Number of items to skip"
           },
           {
             "in": "query",
             "name": "limit",
             "type": "integer",
-            "description": "The numbers of items to return (maximum 100)."
+            "description": "Numbers of items to return (maximum 100)"
           }
         ],
         "responses": {
@@ -413,7 +413,7 @@
             }
           },
           "401": {
-            "description": "Not allowed to access this project ID",
+            "description": "Not allowed to access this project",
             "schema": {
               "$ref": "#/definitions/Error"
             }
@@ -433,7 +433,7 @@
         }
       },
       "post": {
-        "description": "Create a file/folder",
+        "description": "Create file/folder",
         "tags": [
           "Project Files"
         ],
@@ -448,26 +448,26 @@
             "in": "formData",
             "name": "type",
             "type": "string",
-            "description": "The file type (folder, document, image)",
+            "description": "File type ('FOLDER', 'DOCUMENT', 'IMAGE')",
             "required": true
           },
           {
             "in": "formData",
             "name": "folderId",
             "type": "string",
-            "description": "The folder ID of the file"
+            "description": "Folder ID of the file"
           },
           {
             "in": "formData",
             "name": "data",
             "type": "file",
-            "description": "The content data (required if type is not a folder)"
+            "description": "Content data (required if type is not FOLDER)"
           },
           {
             "in": "formData",
             "name": "name",
             "type": "string",
-            "description": "The name of the file (or folder) to create. If omitted the file name will be used. Required for creating a folder"
+            "description": "Name of the file (or folder) to create. If omitted the file name will be used. Required if type 'FOLDER'"
           }
         ],
         "responses": {
@@ -484,7 +484,7 @@
             }
           },
           "403": {
-            "description": "Not allowed to access this project ID",
+            "description": "Not allowed to access this project",
             "schema": {
               "$ref": "#/definitions/Error"
             }
@@ -510,18 +510,18 @@
         }
       }
     },
-    "/projects/{projectId}/files/deeplink": {
+    "/projects/{projectId}/files/deeplink (DRAFT)": {
       "parameters": [
         {
           "name": "projectId",
           "in": "path",
           "required": true,
-          "description": "The ID of the project.",
+          "description": "ID of the project",
           "type": "string"
         }
       ],
       "get": {
-        "description": "Get deeplink to project files -- not yet implemented!",
+        "description": "Get deeplink to project files. This is a draft and not implemented yet!",
         "tags": [
           "Project Files"
         ],
@@ -539,7 +539,7 @@
             }
           },
           "401": {
-            "description": "Not allowed to access this project ID",
+            "description": "Not allowed to access this project",
             "schema": {
               "$ref": "#/definitions/Error"
             }
@@ -698,7 +698,7 @@
         }
       }
     },
-    "/projects/{projectId}/members": {
+    "/projects/{projectId}/members (DRAFT)": {
       "parameters": [
         {
           "name": "projectId",
@@ -709,7 +709,7 @@
         }
       ],
       "get": {
-        "description": "List all members of a project -- not yet implemented!",
+        "description": "List all members of a project. This is a draft and not implemented yet!",
         "tags": [
           "Project Members (draft)"
         ],
@@ -761,7 +761,7 @@
         }
       },
       "post": {
-        "description": "Add members to a project -- not yet implemented!",
+        "description": "Add members to a project. This is a draft and not implemented yet!",
         "tags": [
           "Project Members (draft)"
         ],
@@ -816,7 +816,7 @@
         }
       }
     },
-    "/projects/{projectId}/members/{memberId}": {
+    "/projects/{projectId}/members/{memberId} (DRAFT)": {
       "parameters": [
         {
           "name": "projectId",
@@ -834,9 +834,9 @@
         }
       ],
       "patch": {
-        "description": "Edit a member -- not yet implemented!",
+        "description": "Edit a member.  This is a draft and not implemented yet!",
         "tags": [
-          "Project Members (draft)"
+          "Project Members (DRAFT)"
         ],
         "parameters": [
           {
@@ -928,8 +928,8 @@
       "properties": {
         "message": {
           "type": "string",
-          "description": "A message describing the error",
-          "example": "An error occured."
+          "description": "Message describing the error",
+          "example": "Unable to find project 953c84c6-51ba-4536-b042-85dd20027d0c"
         }
       }
     },
@@ -942,18 +942,17 @@
         "name": {
           "type": "string",
           "description": "The name of the contact",
-          "example": "Herr Maier",
-          "pattern": "^[a-zA-ZäÄöÖüÜß ]+([ -][a-zA-ZäÄöÖüÜß ]+)*$"
+          "example": "Wilhelm Huber"
         },
         "emails": {
           "type": "array",
           "items": {
             "type": "string"
           },
-          "description": "The email of the contact",
+          "description": "Email address of the contact",
           "example": [
-            "maier@test.de",
-            "maier2@test.de"
+            "huber@t-online.de",
+            "willy291@gmx.de"
           ],
           "pattern": "^(([^<>()\\[\\]\\\\.,;:\\s@\"]+(\\.[^<>()\\[\\]\\\\.,;:\\s@\"]+)*)|(\".+\"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$"
         },
@@ -962,16 +961,15 @@
           "items": {
             "type": "string"
           },
-          "description": "The phone of the contact",
+          "description": "Phone number of the contact",
           "example": [
             "+49 711 21893732",
             "+49 711 21893733"
-          ],
-          "pattern": "[0-9 +]+"
+          ]
         }
       }
     },
-    "ChangeProject": {
+    "CreateProject": {
       "type": "object",
       "required": [
         "name"
@@ -984,70 +982,112 @@
         },
         "projectType": {
           "type": "string",
-          "description": "The project type (folder|project)",
-          "example": "folder"
+          "description": "Project type ('FOLDER' or 'PROJECT')",
+          "example": "FOLDER"
+        },
+        "startDate": {
+          "type": "integer",
+          "description": "Start timestamp (seconds since UNIX epoch)",
+          "example": 1575158400
+        },
+        "endDate": {
+          "type": "integer",
+          "description": "End timestamp (seconds since UNIX epoch)",
+          "example": 1588291200
         },
         "orderNumber": {
           "type": "string",
-          "description": "An arbitrary order number",
+          "description": "Order number for this project",
           "example": "92a032as4.853-af62"
         },
         "street": {
           "type": "string",
-          "description": "The street address of this project",
-          "example": "Manteuffelstr. 40"
+          "description": "Street and address number of the project location",
+          "example": "Bergstraße. 40"
         },
         "zipcode": {
           "type": "string",
-          "description": "ZIP code of this project",
+          "description": "ZIP code of the project location",
           "example": "12345"
         },
         "city": {
           "type": "string",
-          "description": "Name of the city of this project",
-          "example": "Berlin"
+          "description": "City of the project location",
+          "example": "Amseldorf"
         },
         "country": {
           "type": "string",
-          "description": "Name of the country",
-          "example": "Germany"
+          "description": "Country name of the project location",
+          "example": "Deutschland"
+        },
+        "clientName": {
+          "type": "string",
+          "description": "Name of the client",
+          "example": "Karlheinz Maier"
+        },
+        "clientEmail": {
+          "type": "string",
+          "description": "E-Mail address of the client",
+          "example": "kh-maier@t-online.de"
+        },
+        "clientPhone": {
+          "type": "string",
+          "description": "Phone number of the client",
+          "example": "+49-170-1611937"
         },
         "billingName": {
           "type": "string",
-          "description": "The name of the billing contact",
-          "example": "Hornberger"
+          "description": "Name of the billing contact",
+          "example": "Dietmar Müller"
         },
         "billingStreet": {
           "type": "string",
-          "description": "The street and address number of the billing conctact",
-          "example": "Manteuffelstr. 40"
+          "description": "Street and address number of the billing conctact",
+          "example": "Birkenallee 16a"
         },
         "billingZipcode": {
           "type": "string",
           "description": "ZIP code of the billing contact",
-          "example": "12345"
+          "example": "32455"
         },
         "billingCity": {
           "type": "string",
-          "description": "The city of the billing contact",
-          "example": "Berlin"
+          "description": "City of the billing contact",
+          "example": "Krehlingen"
         },
         "billingEmail": {
           "type": "string",
-          "description": "The e-mail address of the billing contact",
-          "example": "foo@bar.com"
+          "description": "E-mail address of the billing contact",
+          "example": "d.mueller@mail.org"
         },
         "contacts": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/Contact"
           },
-          "description": "Contacts for this project"
+          "description": "List of additional contacts"
+        },
+        "noteContent": {
+          "type": "string",
+          "description": "User definable note"
+        },
+        "projects": {
+          "type": "array",
+          "description": "child project IDs (only applies to type FOLDER)",
+          "items": {
+            "type": "string"
+          }
         },
         "parentProject": {
-          "type": "string",
-          "description": "The ID of the parent project",
-          "example": "db5b9a4d-7589-4af4-8c79-a96a3b796dc9"
+          "type": "array",
+          "description": "parent project ID (only applies to type PROJECT)",
+          "items": {
+            "type": "string"
+          }
+        },
+        "archived": {
+          "type": "boolean",
+          "description": "Wether this project should be archived for all non-external members"
         }
       }
     },
@@ -1069,67 +1109,112 @@
         },
         "projectType": {
           "type": "string",
-          "description": "The project type (FOLDER|PROJECT)",
+          "description": "Project type ('FOLDER' or 'PROJECT')",
           "example": "FOLDER"
+        },
+        "startDate": {
+          "type": "integer",
+          "description": "Start timestamp (seconds since UNIX epoch)",
+          "example": 1575158400
+        },
+        "endDate": {
+          "type": "integer",
+          "description": "End timestamp (seconds since UNIX epoch)",
+          "example": 1588291200
         },
         "orderNumber": {
           "type": "string",
           "description": "Order number for this project",
-          "example": "12312344d"
+          "example": "92a032as4.853-af62"
         },
         "street": {
           "type": "string",
-          "description": "The street address of this project",
-          "example": "Manteuffelstr. 40"
+          "description": "Street and address number of the project location",
+          "example": "Bergstraße. 40"
         },
         "zipcode": {
           "type": "string",
-          "description": "ZIP code of this project",
+          "description": "ZIP code of the project location",
           "example": "12345"
         },
         "city": {
           "type": "string",
-          "description": "Name of the city of this project",
-          "example": "Berlin"
+          "description": "City of the project location",
+          "example": "Amseldorf"
         },
-        "county": {
+        "country": {
           "type": "string",
-          "description": "Name of the country",
-          "example": "Germany"
+          "description": "Country name of the project location",
+          "example": "Deutschland"
+        },
+        "clientName": {
+          "type": "string",
+          "description": "Name of the client",
+          "example": "Karlheinz Maier"
+        },
+        "clientEmail": {
+          "type": "string",
+          "description": "E-Mail address of the client",
+          "example": "kh-maier@t-online.de"
+        },
+        "clientPhone": {
+          "type": "string",
+          "description": "Phone number of the client",
+          "example": "+49-170-1611937"
         },
         "billingName": {
           "type": "string",
-          "description": "The name of the billing contact",
-          "example": "Hornberger"
-        },
-        "billingEmail": {
-          "type": "string",
-          "description": "The e-mail address of the billing contact",
-          "example": "foo@bar.com"
+          "description": "Name of the billing contact",
+          "example": "Dietmar Müller"
         },
         "billingStreet": {
           "type": "string",
-          "description": "The street and address number of the billing conctact",
-          "example": "Manteuffelstr. 40"
+          "description": "Street and address number of the billing conctact",
+          "example": "Birkenallee 16a"
+        },
+        "billingZipcode": {
+          "type": "string",
+          "description": "ZIP code of the billing contact",
+          "example": "32455"
         },
         "billingCity": {
           "type": "string",
-          "description": "The city of the billing contact",
-          "example": "Berlin"
+          "description": "City of the billing contact",
+          "example": "Krehlingen"
+        },
+        "billingEmail": {
+          "type": "string",
+          "description": "E-mail address of the billing contact",
+          "example": "d.mueller@mail.org"
         },
         "contacts": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/Contact"
           },
-          "description": "Contacts for this project"
+          "description": "List of additional contacts"
+        },
+        "noteContent": {
+          "type": "string",
+          "description": "User definable note"
         },
         "projects": {
           "type": "array",
-          "description": "IDs of projects contained in this project (only applies to type folder)",
+          "description": "child project IDs (only applies to type FOLDER)",
           "items": {
             "type": "string"
           }
+        },
+        "parentProject": {
+          "type": "array",
+          "description": "parent project ID (only applies to type PROJECT)",
+          "items": {
+            "type": "string"
+          }
+        },
+        "archived": {
+          "type": "boolean",
+          "description": "Wether this project is archived for all non-external members"
         }
       }
     },
@@ -1156,12 +1241,12 @@
       "properties": {
         "webLink": {
           "type": "string",
-          "description": "A link that can be opened in a browser",
+          "description": "Link that can be opened in a browser",
           "example": "https://app.mycraftnote.de/#/project?id=0DDAAAA9-2508-4AAF-A576-E91E76EA8CDB"
         },
         "appDeepLink": {
           "type": "string",
-          "description": "A link that can be opened in a mobile client",
+          "description": "Link that can be opened in a mobile client",
           "example": "mycrafty://project?id=0DDAAAA9-2508-4AAF-A576-E91E76EA8CDB"
         }
       }
@@ -1176,37 +1261,37 @@
       "properties": {
         "id": {
           "type": "string",
-          "description": "The unique ID of the file",
+          "description": "Unique file ID",
           "example": "00061E3C-9C02-3CE5-EDFD-9186E6F28114"
         },
         "projectId": {
           "type": "string",
-          "description": "The project ID of this file",
+          "description": "ID of the project this file is associated with",
           "example": "db5b9a4d-7589-4af4-8c79-a96a3b796dc9"
         },
         "name": {
           "type": "string",
-          "description": "The user-defined file name",
+          "description": "User-defined file name",
           "example": "Projektbericht.pdf"
         },
         "folderId": {
           "type": "string",
-          "description": "The parent folder ID of this file",
+          "description": "Parent folder ID of this file",
           "example": "00061E3C-9C02-3CE5-EDFD-9186E6F28114"
         },
         "type": {
           "type": "string",
-          "description": "The file type (FOLDER, DOCUMENT, IMAGE, AUDIO, VIDEO)",
+          "description": "File type (FOLDER, DOCUMENT, IMAGE, AUDIO, VIDEO)",
           "example": "DOCUMENT"
         },
         "creationTimestamp": {
           "type": "string",
-          "description": "The creation timestamp as UNIX date",
+          "description": "Creation timestamp (seconds since UNIX epoch)",
           "example": 1567685998
         },
         "size": {
           "type": "number",
-          "description": "The file size in bytes",
+          "description": "File size in bytes",
           "example": 2450
         }
       }
@@ -1230,27 +1315,27 @@
       "properties": {
         "id": {
           "type": "string",
-          "description": "The unique ID of the member",
+          "description": "Unique member ID",
           "example": "Ka3gh32ashtQJuuas9"
         },
         "email": {
           "type": "string",
-          "description": "The e-mail address of the member",
+          "description": "E-mail address of the member",
           "example": "cf@gauss.de"
         },
         "name": {
           "type": "string",
-          "description": "The name of this member",
+          "description": "First name",
           "example": "Carl-Friedrich"
         },
         "lastname": {
           "type": "string",
-          "description": "The last name of this member",
+          "description": "Last name",
           "example": "Gauss"
         },
         "role": {
           "type": "string",
-          "description": "The role this member has in a project",
+          "description": "Role this member has in the company",
           "example": "OWNER"
         }
       }
@@ -1278,12 +1363,12 @@
       "properties": {
         "id": {
           "type": "string",
-          "description": "The unique ID of the member",
+          "description": "Unique ID of the member",
           "example": "Ka3gh32ashtQJuuas9"
         },
         "role": {
           "type": "string",
-          "description": "The role this member has in a project",
+          "description": "Role this member has in a project",
           "example": "OWNER"
         }
       }
@@ -1320,27 +1405,27 @@
       "properties": {
         "id": {
           "type": "string",
-          "description": "The unique ID of the employee",
+          "description": "Unique employee ID",
           "example": "Ka3gh32ashtQJuuas9"
         },
         "email": {
           "type": "string",
-          "description": "The e-mail address of the employee",
+          "description": "E-mail address",
           "example": "cf@gauss.de"
         },
         "name": {
           "type": "string",
-          "description": "The name of this employee",
+          "description": "First name",
           "example": "Carl-Friedrich"
         },
         "lastname": {
           "type": "string",
-          "description": "The last name of this employee",
+          "description": "Last name",
           "example": "Gauss"
         },
         "jobTitle": {
           "type": "string",
-          "description": "The job title of this employee",
+          "description": "Job title",
           "example": "Mathematician"
         }
       }
@@ -1364,18 +1449,18 @@
       "properties": {
         "id": {
           "type": "string",
-          "description": "The unique ID of this employee",
+          "description": "Unique employee ID",
           "example": "Ka3gh32ashtQJuuas9"
         },
         "email": {
           "type": "string",
-          "description": "The e-mail address",
+          "description": "E-mail address",
           "example": "cf@gauss.de"
         },
         "phone": {
           "type": "string",
-          "description": "The phone number",
-          "example": 49171199132
+          "description": "Phone number",
+          "example": "+49-171-199132"
         }
       }
     },

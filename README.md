@@ -1,8 +1,5 @@
 # Craftnote API
-The Craftnote API allows you to manage data in Craftnote via a HTTP REST API.
-
-## Development
-Please notice that the current base URL is https://europe-west1-craftnote-live.cloudfunctions.net/api/v1
+The Craftnote API allows you to manage data in Craftnote via HTTP REST.
 
 ## Swagger Definition
 You can explore the API via the included [swagger definition](https://bitbucket.org/Craftnote/api-doc/raw/master/swagger.json). Simply navigate to [editor.swagger.io](https://editor.swagger.io), press File ▸ Import URL and enter the [URL of the swagger definition](https://bitbucket.org/Craftnote/api-doc/raw/master/swagger.json).
@@ -147,8 +144,6 @@ A deeplink is a collection of links that can be used to access a specific sectio
 ```
 
 ### Get a project deeplink
-**UPCOMING FEATURE**
-
 `GET /projects/03AE0AA1-B699-4A9C-85BE-30328897446B/deeplink`
 ```json
 {
@@ -181,12 +176,24 @@ A deeplink is a collection of links that can be used to access a specific sectio
 ```
 
 ### Update project
-**UPCOMING FEATURE**
-
-`PATCH /projects/03AE0AA1-B699-4A9C-85BE-30328897446B`
+`PUT /projects/03AE0AA1-B699-4A9C-85BE-30328897446B`
 ```json
 {
-    "name": "NewProjectName"
+    "name": "My Changed name",
+    "projectType": "FOLDER",
+    "orderNumber": "12312344d",
+    "street": "Unter den Linden",
+    "zipcode": "10234",
+    "city": "Berlin",
+    "contacts": [
+    {
+      "name": "Max Mustermann",
+      "emails": ["mm@test.de"],
+      "phones": ["+49 711 21893732"]
+    }
+    ],
+    "billingCity": "Berlin",
+    "parentProject": "46B6D771-492E-4841-8D0C-012328BB1031"
 }
 ```
 
