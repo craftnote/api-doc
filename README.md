@@ -6,7 +6,7 @@ You can explore the API via the included [swagger definition](https://bitbucket.
 
 ## Authentication
 You will need to authenticate to the API via the `X-Cn-Api-Key` header. Make sure to include this header on all requests.
-An API Key can be created in the API Keys section of the Craftnote settings.
+An API Key can be created in the API Keys section of the Craftnote settings by an owner of the company.
 
 ## Concepts
 ### IDs
