@@ -1,0 +1,1129 @@
+openapi: 3.0.3
+info:
+  title: Craftnote API
+  description: API to manage projects, files and users in Craftnote.
+  contact:
+    name: myCraftnote Digital GmbH
+    url: https://www.craftnote.de
+    email: schnittstelle@craftnote.de
+  license:
+    name: proprietary
+  version: 1.3.0
+servers:
+- url: http://localhost:5000/craftnote-development/europe-west1/api/v1
+security:
+  - ApiKeyAuth: []
+paths:
+  /company/members:
+    get:
+      tags:
+      - Company Members
+      description: List employees of the company associated with the API key.
+      parameters:
+      - $ref: "#/components/parameters/paginationMode"
+      - $ref: "#/components/parameters/paginationOffset"
+      - $ref: "#/components/parameters/paginationLimit"
+      - $ref: "#/components/parameters/paginationStartAfter"
+      responses:
+        200:
+          description: List returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MembersList"
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: Unable to authorize
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        415:
+          description: Invalid content type
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        default:
+          description: Unexpected error
+          content: {}
+  /company/members/me:
+    get:
+      tags:
+      - Company Members
+      description: Returns the member that is associated with the API key in use
+      responses:
+        200:
+          description: Member returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Member"
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: Unable to authorize
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        415:
+          description: Invalid content type
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        default:
+          description: Unexpected error
+          content: {}
+  /projects:
+    get:
+      tags:
+      - Projects
+      description: List all projects of the company.
+      parameters:
+      - name: offset
+        in: query
+        description: Number of items to skip
+        schema:
+          type: integer
+      - name: limit
+        in: query
+        description: Numbers of items to return (maximum 100)
+        schema:
+          type: integer
+      responses:
+        200:
+          description: List returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectsList'
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        401:
+          description: Unable to authorize
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        415:
+          description: Invalid content type
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        default:
+          description: Unexpected error
+          content: {}
+    post:
+      tags:
+      - Projects
+      description: Create new project/folder
+      requestBody:
+        description: Project data
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateProject'
+        required: true
+      responses:
+        200:
+          description: Project successfully created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        415:
+          description: Invalid content type
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        default:
+          description: Unexpected error
+          content: {}
+      x-codegen-request-body-name: body
+  /projects/{projectId}:
+    get:
+      tags:
+      - Projects
+      description: Retrieve individual project
+      parameters:
+      - name: projectId
+        in: path
+        description: ID of the project
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Project returned succesfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        401:
+          description: Not allowed to access this project
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: Project ID was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    put:
+      tags:
+      - Projects
+      description: Update project
+      parameters:
+      - name: projectId
+        in: path
+        description: ID of the project
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Project data
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateProject'
+        required: true
+      responses:
+        200:
+          description: Project updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        401:
+          description: Not allowed to update this project
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: Project ID was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /projects/{projectId}/deeplink:
+    get:
+      tags:
+      - Projects
+      description: Retrieve a project deeplink
+      parameters:
+      - name: projectId
+        in: path
+        description: ID of the project
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Project deeplink returned succesfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Deeplink'
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        401:
+          description: Not allowed to access this project
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: Project ID was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /projects/{projectId}/files:
+    get:
+      tags:
+      - Project Files
+      description: List all files of a project
+      parameters:
+      - name: projectId
+        in: path
+        description: ID of the project
+        required: true
+        schema:
+          type: string
+      - name: offset
+        in: query
+        description: Number of items to skip
+        schema:
+          type: integer
+      - name: limit
+        in: query
+        description: Numbers of items to return (maximum 100)
+        schema:
+          type: integer
+      responses:
+        200:
+          description: List returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FilesList'
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        401:
+          description: Not allowed to access this project
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: Project ID was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      tags:
+      - Project Files
+      description: Create file/folder
+      parameters:
+      - name: projectId
+        in: path
+        description: ID of the project
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              required:
+              - type
+              properties:
+                type:
+                  type: string
+                  description: File type ('FOLDER', 'DOCUMENT', 'IMAGE')
+                folderId:
+                  type: string
+                  description: Folder ID of the file
+                data:
+                  type: string
+                  description: Content data (required if type is not FOLDER)
+                  format: binary
+                name:
+                  type: string
+                  description: Name of the file (or folder) to create. If omitted
+                    the file name will be used. Required if type 'FOLDER'
+        required: true
+      responses:
+        200:
+          description: File created successfully
+          content:
+            multipart/form-data:
+              schema:
+                $ref: '#/components/schemas/File'
+        400:
+          description: Bad request
+          content:
+            multipart/form-data:
+              schema:
+                $ref: '#/components/schemas/Error'
+        403:
+          description: Not allowed to access this project
+          content:
+            multipart/form-data:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: Project ID or folder ID were not found
+          content:
+            multipart/form-data:
+              schema:
+                $ref: '#/components/schemas/Error'
+        413:
+          description: File size exceeds server limits
+          content:
+            multipart/form-data:
+              schema:
+                $ref: '#/components/schemas/Error'
+        default:
+          description: Unexpected error
+          content:
+            multipart/form-data:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /files/{fileId}:
+    get:
+      tags:
+      - Project Files
+      description: Get a file/folder
+      parameters:
+      - name: fileId
+        in: path
+        description: The ID of the file.
+        required: true
+        schema:
+          type: string
+      - name: download
+        in: query
+        description: Whether to download this file. If selected the response will
+          contain the file content instead of its meta data.
+        schema:
+          type: boolean
+      responses:
+        200:
+          description: File returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/File'
+            image/json:
+              schema:
+                $ref: '#/components/schemas/File'
+            image/png:
+              schema:
+                $ref: '#/components/schemas/File'
+            application/pdf:
+              schema:
+                $ref: '#/components/schemas/File'
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            image/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            image/png:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/pdf:
+              schema:
+                $ref: '#/components/schemas/Error'
+        401:
+          description: Not allowed to access the project this file is associated with
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            image/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            image/png:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/pdf:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: File ID was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            image/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            image/png:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/pdf:
+              schema:
+                $ref: '#/components/schemas/Error'
+        413:
+          description: File size exceeds server limits
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            image/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            image/png:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/pdf:
+              schema:
+                $ref: '#/components/schemas/Error'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            image/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            image/png:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/pdf:
+              schema:
+                $ref: '#/components/schemas/Error'
+    put:
+      tags:
+      - Project Files
+      description: Update a file/folder
+      parameters:
+      - name: fileId
+        in: path
+        description: The ID of the file.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              properties:
+                folderId:
+                  type: string
+                  description: The folder ID of the file
+                data:
+                  type: string
+                  description: The content data
+                  format: binary
+                name:
+                  type: string
+                  description: The name of the new file (or folder)
+      responses:
+        200:
+          description: File updated successfully
+          content:
+            multipart/form-data:
+              schema:
+                $ref: '#/components/schemas/File'
+        400:
+          description: Bad request
+          content:
+            multipart/form-data:
+              schema:
+                $ref: '#/components/schemas/Error'
+        401:
+          description: Not allowed to access the project this file is associated with
+          content:
+            multipart/form-data:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: Project ID or folder ID were not found
+          content:
+            multipart/form-data:
+              schema:
+                $ref: '#/components/schemas/Error'
+        413:
+          description: File size exceeds server limits
+          content:
+            multipart/form-data:
+              schema:
+                $ref: '#/components/schemas/Error'
+        default:
+          description: Unexpected error
+          content:
+            multipart/form-data:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /projects/{projectId}/members:
+    get:
+      tags:
+      - Project Members
+      description: List all members of a project.
+        yet!
+      parameters:
+      - name: projectId
+        in: path
+        description: The ID of the project.
+        required: true
+        schema:
+          type: string
+      - $ref: "#/components/parameters/paginationMode"
+      - $ref: "#/components/parameters/paginationOffset"
+      - $ref: "#/components/parameters/paginationLimit"
+      - $ref: "#/components/parameters/paginationStartAfter"
+      responses:
+        200:
+          description: List returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MembersList'
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        401:
+          description: Not allowed to access this project ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: Project ID was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      tags:
+      - Project Members
+      description: Add a user to a project.
+      parameters:
+      - name: projectId
+        in: path
+        description: The ID of the project.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: The user to add
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddMember'
+        required: true
+      responses:
+        200:
+          description: Members added successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MembersList'
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        403:
+          description: Not allowed to access this project ID or edit members
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: Project ID or folder ID were not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        413:
+          description: File size exceeds server limits
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-codegen-request-body-name: body
+  /projects/{projectId}/members/{userId}:
+    delete:
+      tags:
+      - Project Members (draft)
+      description: Remove a member from a project
+      parameters:
+      - name: projectId
+        in: path
+        description: The ID of the project.
+        required: true
+        schema:
+          type: string
+      - name: userId
+        in: path
+        description: The ID of the member.
+        required: true
+        schema:
+          type: string
+      responses:
+        204:
+          description: Member removed succesfully
+          content: {}
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        401:
+          description: Not allowed to access this project ID or edit members
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: Project ID or member ID were not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  parameters:
+    paginationMode:
+        name: paginationMode
+        in: query
+        description: Whether to use offset- or token based pagination
+        schema:
+          type: string
+          default: offset
+          enum: ["offset", "token"]
+    paginationOffset:
+        name: offset
+        in: query
+        description: Number of items to skip
+        schema:
+          type: integer
+          minimum: 0
+          default: 0
+    paginationStartAfter:
+        name: startAfter
+        in: query
+        description: ID of the last object to skip (only used if paginatioMode is set to token)
+        schema:
+          type: string
+    paginationLimit:
+        name: limit
+        in: query
+        description: Maximum numbers of items to return
+        schema:
+          type: integer
+          maximum: 100
+          default: 100
+  schemas:
+    Error:
+      required:
+      - message
+      type: object
+      properties:
+        code:
+          type: string
+          description: Code string identifying the error
+          example: not_found
+        description:
+          type: string
+          description: Detailled error description
+          example: Unable to find project 953c84c6-51ba-4536-b042-85dd20027d0c
+    Contact:
+      required:
+      - name
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the contact
+          example: Wilhelm Huber
+        emails:
+          type: array
+          description: Email address of the contact
+          example:
+          - huber@t-online.de
+          - willy291@gmx.de
+          items:
+            type: string
+        phones:
+          type: array
+          description: Phone number of the contact
+          example:
+          - +49 711 21893732
+          - +49 711 21893733
+          items:
+            type: string
+    CreateProject:
+      required:
+      - name
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of this project
+          example: Wasserrohrbruch
+        projectType:
+          type: string
+          description: Project type ('FOLDER' or 'PROJECT')
+          example: FOLDER
+        startDate:
+          type: integer
+          description: Start timestamp (seconds since UNIX epoch)
+          example: 1575158400
+        endDate:
+          type: integer
+          description: End timestamp (seconds since UNIX epoch)
+          example: 1588291200
+        orderNumber:
+          type: string
+          description: Order number for this project
+          example: 92a032as4.853-af62
+        street:
+          type: string
+          description: Street and address number of the project location
+          example: Bergstraße. 40
+        zipcode:
+          type: string
+          description: ZIP code of the project location
+          example: "12345"
+        city:
+          type: string
+          description: City of the project location
+          example: Amseldorf
+        country:
+          type: string
+          description: Country name of the project location
+          example: Deutschland
+        clientName:
+          type: string
+          description: Name of the client
+          example: Karlheinz Maier
+        clientEmail:
+          type: string
+          description: E-Mail address of the client
+          example: kh-maier@t-online.de
+        clientPhone:
+          type: string
+          description: Phone number of the client
+          example: +49-170-1611937
+        billingName:
+          type: string
+          description: Name of the billing contact
+          example: Dietmar Müller
+        billingStreet:
+          type: string
+          description: Street and address number of the billing conctact
+          example: Birkenallee 16a
+        billingZipcode:
+          type: string
+          description: ZIP code of the billing contact
+          example: "32455"
+        billingCity:
+          type: string
+          description: City of the billing contact
+          example: Krehlingen
+        billingEmail:
+          type: string
+          description: E-mail address of the billing contact
+          example: d.mueller@mail.org
+        contacts:
+          type: array
+          description: List of additional contacts
+          items:
+            $ref: '#/components/schemas/Contact'
+        noteContent:
+          type: string
+          description: User definable note
+        projects:
+          type: array
+          description: child project IDs (only applies to type FOLDER)
+          items:
+            type: string
+        parentProject:
+          type: array
+          description: parent project ID (only applies to type PROJECT)
+          items:
+            type: string
+        archived:
+          type: boolean
+          description: Wether this project should be archived for all non-external
+            members
+    Project:
+      required:
+      - name
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique project ID
+          example: 0000FFB2-9DC1-4A50-A8BB-14C899CC52FC
+        name:
+          type: string
+          description: Name of this project
+          example: Wasserrohrbruch
+        projectType:
+          type: string
+          description: Project type ('FOLDER' or 'PROJECT')
+          example: FOLDER
+        startDate:
+          type: integer
+          description: Start timestamp (seconds since UNIX epoch)
+          example: 1575158400
+        endDate:
+          type: integer
+          description: End timestamp (seconds since UNIX epoch)
+          example: 1588291200
+        orderNumber:
+          type: string
+          description: Order number for this project
+          example: 92a032as4.853-af62
+        street:
+          type: string
+          description: Street and address number of the project location
+          example: Bergstraße. 40
+        zipcode:
+          type: string
+          description: ZIP code of the project location
+          example: "12345"
+        city:
+          type: string
+          description: City of the project location
+          example: Amseldorf
+        country:
+          type: string
+          description: Country name of the project location
+          example: Deutschland
+        clientName:
+          type: string
+          description: Name of the client
+          example: Karlheinz Maier
+        clientEmail:
+          type: string
+          description: E-Mail address of the client
+          example: kh-maier@t-online.de
+        clientPhone:
+          type: string
+          description: Phone number of the client
+          example: +49-170-1611937
+        billingName:
+          type: string
+          description: Name of the billing contact
+          example: Dietmar Müller
+        billingStreet:
+          type: string
+          description: Street and address number of the billing conctact
+          example: Birkenallee 16a
+        billingZipcode:
+          type: string
+          description: ZIP code of the billing contact
+          example: "32455"
+        billingCity:
+          type: string
+          description: City of the billing contact
+          example: Krehlingen
+        billingEmail:
+          type: string
+          description: E-mail address of the billing contact
+          example: d.mueller@mail.org
+        contacts:
+          type: array
+          description: List of additional contacts
+          items:
+            $ref: '#/components/schemas/Contact'
+        noteContent:
+          type: string
+          description: User definable note
+        projects:
+          type: array
+          description: child project IDs (only applies to type FOLDER)
+          items:
+            type: string
+        parentProject:
+          type: array
+          description: parent project ID (only applies to type PROJECT)
+          items:
+            type: string
+        archived:
+          type: boolean
+          description: Wether this project is archived for all non-external members
+    ProjectsList:
+      required:
+      - projects
+      type: object
+      properties:
+        projects:
+          type: array
+          items:
+            $ref: '#/components/schemas/Project'
+    Deeplink:
+      required:
+      - appDeepLink
+      - webLink
+      type: object
+      properties:
+        webLink:
+          type: string
+          description: Link that can be opened in a browser
+          example: https://app.mycraftnote.de/#/project?id=0DDAAAA9-2508-4AAF-A576-E91E76EA8CDB
+        appDeepLink:
+          type: string
+          description: Link that can be opened in a mobile client
+          example: mycrafty://project?id=0DDAAAA9-2508-4AAF-A576-E91E76EA8CDB
+    File:
+      required:
+      - id
+      - name
+      - type
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique file ID
+          example: 00061E3C-9C02-3CE5-EDFD-9186E6F28114
+        projectId:
+          type: string
+          description: ID of the project this file is associated with
+          example: db5b9a4d-7589-4af4-8c79-a96a3b796dc9
+        name:
+          type: string
+          description: User-defined file name
+          example: Projektbericht.pdf
+        folderId:
+          type: string
+          description: Parent folder ID of this file
+          example: 00061E3C-9C02-3CE5-EDFD-9186E6F28114
+        type:
+          type: string
+          description: File type (FOLDER, DOCUMENT, IMAGE, AUDIO, VIDEO)
+          example: DOCUMENT
+        creationTimestamp:
+          type: string
+          description: Creation timestamp (seconds since UNIX epoch)
+          example: "1567685998"
+        size:
+          type: number
+          description: File size in bytes
+          example: 2450.0
+    FilesList:
+      required:
+      - files
+      type: object
+      properties:
+        files:
+          type: array
+          items:
+            $ref: '#/components/schemas/File'
+    AddMember:
+      required:
+      - id
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique ID of the member
+          example: Ka3gh32ashtQJuuas9
+    Member:
+      type: object
+      description: A user represented as member inside a company or project
+      properties:
+        id:
+          type: string
+          description: Unique user ID
+          example: Ka3gh32ashtQJuuas9
+        email:
+          type: string
+          description: The user's e-mail address
+          example: cf@gauss.de
+        mobile:
+          type: string
+          description: The user's mobile phone number
+          example: "+49-171-174282137"
+        name:
+          type: string
+          description: Given name of the user
+          example: Carl-Friedrich
+        lastname:
+          type: string
+          description: Surname of the user
+          example: Gauss
+    MembersList:
+      required:
+      - members
+      type: object
+      properties:
+        members:
+          type: array
+          items:
+            $ref: "#/components/schemas/Member"
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      name: X-CN-API-Key
+      in: header
