@@ -875,23 +875,27 @@ components:
           example: +49-170-1611937
         billingName:
           type: string
-          description: Name of the billing contact
+          description: Name of the billing address
           example: Dietmar Müller
         billingStreet:
           type: string
-          description: Street and address number of the billing conctact
+          description: Street and address number of the billing address
           example: Birkenallee 16a
         billingZipcode:
           type: string
-          description: ZIP code of the billing contact
+          description: ZIP code of the billing address
           example: "32455"
         billingCity:
           type: string
-          description: City of the billing contact
+          description: City of the billing address
           example: Krehlingen
+        billingCountry:
+          type: string
+          description: Country of the billing address
+          example: Germany
         billingEmail:
           type: string
-          description: E-mail address of the billing contact
+          description: E-mail address of the billing address
           example: d.mueller@mail.org
         contacts:
           type: array
@@ -988,6 +992,10 @@ components:
           type: string
           description: City of the billing contact
           example: Krehlingen
+        billingCountry:
+          type: string
+          description: Country of the billing address
+          example: Germany
         billingEmail:
           type: string
           description: E-mail address of the billing contact
