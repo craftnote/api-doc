@@ -10,7 +10,7 @@ info:
     name: proprietary
   version: 1.3.0
 servers:
-- url: http://localhost:5000/craftnote-development/europe-west1/api/v1
+- url:  https://europe-west1-craftnote-live.cloudfunctions.net/api/v1
 security:
   - ApiKeyAuth: []
 paths:
