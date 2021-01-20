@@ -706,7 +706,7 @@ paths:
   /projects/{projectId}/members/{userId}:
     delete:
       tags:
-      - Project Members (draft)
+      - Project Members
       description: Remove a member from a project
       parameters:
       - name: projectId
