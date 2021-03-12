@@ -62,7 +62,7 @@ So setting `offset` to `2` and `limit` to `5` would yield the following result:
   ]
 }
 ```
-If offset is omitted, it defaults to `0`.
+If offset is omitted, it defaults to `0`. Items are always returned sorted ascending by ID.
 
 #### Token-based
 The main issue with offset-based pagination is that if data is added or deleted while querying it can lead to items appearing multiple times, or even not be included at all. A solution to overcome this limitation is token-based pagination.
@@ -82,7 +82,9 @@ Setting the query parameters `limit` to `5` and `startAfter` to `c`, we get the 
 }
 ```
 `startAfter` always points to the ID of the last item to skip. If it is omitted, items will be returned from the start (here `id "a"`).  
-`limit` works the same way as with offset-based pagination
+`limit` works the same way as with offset-based pagination and limits the number of items returned.
+
+Items are always returned sorted ascending by ID.
 
 
 ### Members
