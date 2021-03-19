@@ -1090,7 +1090,7 @@ components:
             $ref: '#/components/schemas/File'
     AddMember:
       required:
-      - id
+      - userId
       type: object
       properties:
         id:
