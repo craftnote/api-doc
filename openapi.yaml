@@ -52,6 +52,39 @@ paths:
         default:
           description: Unexpected error
           content: {}
+  /company/settings:
+    get:
+      tags:
+      - Company Settings
+      description: Returns the company settings.
+      responses:
+        200:
+          description: Company settings returned succesfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CompanySetting"
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: Unable to authorize
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        415:
+          description: Invalid content type
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        default:
+          description: Unexpected error
+          content: {}
   /company/members/me:
     get:
       tags:
@@ -919,6 +952,62 @@ components:
           type: boolean
           description: Wether this project should be archived for all non-external
             members
+
+    CompanySetting:
+      type: object
+      properties:
+        companyId:
+          type: string
+          description: Unique company ID
+          example: 0000FFB2-9DC1-4A50-A8BB-14C899CC52FC
+        status:
+          type: array
+          description: project statuses
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: Unique status id
+                example: 0000FFB2-9DC1-4A50-A8BB-14C899CC52FC
+              name:
+                type: string
+                description: Status name
+                example: done
+              description:
+                type: string
+                description: Status description
+        workingHours:
+          type: object
+          description: company working hours
+          properties:
+            start:
+              type: string
+            end:
+              type: string
+        workingDays:
+          type: array
+          description: index of array is ISO day of week minus one 0 = Monday to 6 = Sunday.
+          items:
+            type: object
+            properties:
+              enabled:
+                type: boolean
+        workTypes:
+          type: array
+          description: array of worktypes for time tracking
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: Unique work type id
+              name:
+                type: string
+                description: name of work work type
+              deleted:
+                type: boolean
+                description: is work type deleted?
     Project:
       required:
       - name
