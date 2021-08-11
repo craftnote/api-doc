@@ -755,9 +755,12 @@ paths:
         schema:
           type: string
       responses:
-        204:
+        200:
           description: Member removed succesfully
-          content: {}
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Member'
         400:
           description: Bad request
           content:
