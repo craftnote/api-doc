@@ -815,11 +815,11 @@ components:
         code:
           type: string
           description: Code string identifying the error
-          example: not_found
+          example: Error
         description:
           type: string
           description: Detailled error description
-          example: Unable to find project 953c84c6-51ba-4536-b042-85dd20027d0c
+          example: Unexpected error
     ValidationError:
       type: object
       properties:
