@@ -1,4 +1,4 @@
-openapi: 3.0.3
+openapi: 3.0.0
 info:
   title: Craftnote API
   description: API to manage projects, files and users in Craftnote.
@@ -32,26 +32,33 @@ paths:
               schema:
                 $ref: "#/components/schemas/MembersList"
         400:
-          description: Bad request
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/BadRequest'
         401:
-          description: Unable to authorize
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/NotAuthenticated'
         415:
-          description: Invalid content type
+          $ref: "#/components/responses/InvalidContent"
+        default:
+          $ref: '#/components/responses/DefaultError'
+  /company/settings:
+    get:
+      tags:
+      - Company Settings
+      description: Returns the company settings.
+      responses:
+        200:
+          description: Company settings returned succesfully
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Error"
+                $ref: "#/components/schemas/CompanySetting"
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/NotAuthenticated'
+        415:
+          $ref: "#/components/responses/InvalidContent"
         default:
-          description: Unexpected error
-          content: {}
+          $ref: '#/components/responses/DefaultError'
   /company/members/me:
     get:
       tags:
@@ -65,26 +72,13 @@ paths:
               schema:
                 $ref: "#/components/schemas/Member"
         400:
-          description: Bad request
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/BadRequest'
         401:
-          description: Unable to authorize
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/NotAuthenticated'
         415:
-          description: Invalid content type
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/InvalidContent"
         default:
-          description: Unexpected error
-          content: {}
+          $ref: '#/components/responses/DefaultError'
   /projects:
     get:
       tags:
@@ -109,26 +103,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/ProjectsList'
         400:
-          description: Bad request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/BadRequest'
         401:
-          description: Unable to authorize
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/NotAuthenticated'
         415:
-          description: Invalid content type
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: "#/components/responses/InvalidContent"
         default:
-          description: Unexpected error
-          content: {}
+          $ref: '#/components/responses/DefaultError'
     post:
       tags:
       - Projects
@@ -148,26 +129,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/Project'
         400:
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/BadRequest'
         401:
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/NotAuthenticated'
         415:
-          description: Invalid content type
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: "#/components/responses/InvalidContent"
         default:
-          description: Unexpected error
-          content: {}
+          $ref: '#/components/responses/DefaultError'
       x-codegen-request-body-name: body
   /projects/{projectId}:
     get:
@@ -189,29 +157,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/Project'
         400:
-          description: Bad request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/BadRequest'
         401:
-          description: Not allowed to access this project
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/NotAuthenticated'
         404:
-          description: Project ID was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/NotFound'
         default:
-          description: Unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/DefaultError'
     put:
       tags:
       - Projects
@@ -238,29 +190,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/Project'
         400:
-          description: Bad request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/BadRequest'
         401:
-          description: Not allowed to update this project
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/NotAuthenticated'
         404:
-          description: Project ID was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/NotFound'
         default:
-          description: Unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/DefaultError'
   /projects/{projectId}/deeplink:
     get:
       tags:
@@ -281,29 +217,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/Deeplink'
         400:
-          description: Bad request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/BadRequest'
         401:
-          description: Not allowed to access this project
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/NotAuthenticated'
         404:
-          description: Project ID was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/NotFound'
         default:
-          description: Unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/DefaultError'
   /projects/{projectId}/files:
     get:
       tags:
@@ -334,29 +254,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/FilesList'
         400:
-          description: Bad request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/BadRequest'
         401:
-          description: Not allowed to access this project
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/NotAuthenticated'
         404:
-          description: Project ID was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/NotFound'
         default:
-          description: Unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/DefaultError'
     post:
       tags:
       - Project Files
@@ -398,35 +302,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/File'
         400:
-          description: Bad request
-          content:
-            multipart/form-data:
-              schema:
-                $ref: '#/components/schemas/Error'
-        403:
-          description: Not allowed to access this project
-          content:
-            multipart/form-data:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/NotAuthenticated'
         404:
-          description: Project ID or folder ID were not found
-          content:
-            multipart/form-data:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/NotFound'
         413:
-          description: File size exceeds server limits
-          content:
-            multipart/form-data:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/FileSize'
         default:
-          description: Unexpected error
-          content:
-            multipart/form-data:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/DefaultError'
   /files/{fileId}:
     get:
       tags:
@@ -462,80 +346,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/File'
         400:
-          description: Bad request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-            image/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-            image/png:
-              schema:
-                $ref: '#/components/schemas/Error'
-            application/pdf:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/BadRequest'
         401:
-          description: Not allowed to access the project this file is associated with
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-            image/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-            image/png:
-              schema:
-                $ref: '#/components/schemas/Error'
-            application/pdf:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/NotAuthenticated'
         404:
-          description: File ID was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-            image/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-            image/png:
-              schema:
-                $ref: '#/components/schemas/Error'
-            application/pdf:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/NotFound'
         413:
-          description: File size exceeds server limits
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-            image/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-            image/png:
-              schema:
-                $ref: '#/components/schemas/Error'
-            application/pdf:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/FileSize'
         default:
-          description: Unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-            image/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-            image/png:
-              schema:
-                $ref: '#/components/schemas/Error'
-            application/pdf:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/DefaultError'
     put:
       tags:
       - Project Files
@@ -570,35 +389,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/File'
         400:
-          description: Bad request
-          content:
-            multipart/form-data:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/BadRequest'
         401:
-          description: Not allowed to access the project this file is associated with
-          content:
-            multipart/form-data:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/NotAuthenticated'
         404:
-          description: Project ID or folder ID were not found
-          content:
-            multipart/form-data:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/NotFound'
         413:
-          description: File size exceeds server limits
-          content:
-            multipart/form-data:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/FileSize'
         default:
-          description: Unexpected error
-          content:
-            multipart/form-data:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/DefaultError'
   /projects/{projectId}/members:
     get:
       tags:
@@ -624,29 +423,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/MembersList'
         400:
-          description: Bad request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/BadRequest'
         401:
-          description: Not allowed to access this project ID
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/NotAuthenticated'
         404:
-          description: Project ID was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/NotFound'
         default:
-          description: Unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/DefaultError'
     post:
       tags:
       - Project Members
@@ -673,35 +456,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/MembersList'
         400:
-          description: Bad request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/NotAuthenticated'
         403:
-          description: Not allowed to access this project ID or edit members
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/Forbidden'
         404:
-          description: Project ID or folder ID were not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-        413:
-          description: File size exceeds server limits
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/NotFound'
         default:
-          description: Unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/DefaultError'
       x-codegen-request-body-name: body
   /projects/{projectId}/members/{userId}:
     delete:
@@ -729,30 +492,282 @@ paths:
               schema:
                 $ref: '#/components/schemas/Member'
         400:
-          description: Bad request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/BadRequest'
         401:
-          description: Not allowed to access this project ID or edit members
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/NotAuthenticated'
+        403:
+          $ref: '#/components/responses/Forbidden'
         404:
-          description: Project ID or member ID were not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/NotFound'
         default:
-          description: Unexpected error
+          $ref: '#/components/responses/DefaultError'
+  /projects/{projectId}/times:
+    get:
+      tags:
+        - Project Times
+      description: List all times of a project.
+      parameters:
+        - name: projectId
+          in: path
+          description: The ID of the project.
+          required: true
+          schema:
+            type: string
+        - $ref: "#/components/parameters/paginationMode"
+        - $ref: "#/components/parameters/paginationOffset"
+        - $ref: "#/components/parameters/paginationLimit"
+        - $ref: "#/components/parameters/timesPaginationStartAfter"
+      responses:
+        200:
+          description: List returned successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: '#/components/schemas/TimesList'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/NotAuthenticated'
+        403:
+          $ref: '#/components/responses/Forbidden'
+        404:
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/DefaultError'
+    post:
+      tags:
+        - Project Times
+      description: Add a time to a project.
+      parameters:
+        - name: projectId
+          in: path
+          description: The ID of the project.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: The time to add
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddTime'
+        required: true
+      responses:
+        200:
+          description: Time added successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Time'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/NotAuthenticated'
+        403:
+          $ref: '#/components/responses/Forbidden'
+        404:
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/DefaultError'
+      x-codegen-request-body-name: body
+  /projects/{projectId}/times/{timeId}:
+    delete:
+      tags:
+        - Project Times
+      description: Deletes a time entry from the project
+      parameters:
+        - name: projectId
+          in: path
+          description: The ID of the project.
+          required: true
+          schema:
+            type: string
+        - name: timeId
+          in: path
+          description: The ID of the time entry.
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Time entry has been deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Time'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/NotAuthenticated'
+        403:
+          $ref: '#/components/responses/Forbidden'
+        404:
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/DefaultError'
+    get:
+      tags:
+        - Project Times
+      description: Get a time entry
+      parameters:
+        - name: projectId
+          in: path
+          description: The ID of the project.
+          required: true
+          schema:
+            type: string
+        - name: timeId
+          in: path
+          description: The ID of the time entry.
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Time returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Time'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/NotAuthenticated'
+        403:
+          $ref: '#/components/responses/Forbidden'
+        404:
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/DefaultError'
+    put:
+      tags:
+        - Project Times
+      description: Replace a time entry
+      parameters:
+        - name: projectId
+          in: path
+          description: The ID of the project.
+          required: true
+          schema:
+            type: string
+        - name: timeId
+          in: path
+          description: The ID of the time entry.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddTime'
+      responses:
+        200:
+          description: Time entry replaced successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Time'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/NotAuthenticated'
+        403:
+          $ref: '#/components/responses/Forbidden'
+        404:
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/DefaultError'
+    patch:
+      tags:
+        - Project Times
+      description: Update a time entry
+      parameters:
+        - name: projectId
+          in: path
+          description: The ID of the project.
+          required: true
+          schema:
+            type: string
+        - name: timeId
+          in: path
+          description: The ID of the time entry.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchTime'
+      responses:
+        200:
+          description: time entry replaced successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Time'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/NotAuthenticated'
+        403:
+          $ref: '#/components/responses/Forbidden'
+        404:
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/DefaultError'
 components:
+  responses:
+    BadRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ValidationError'
+    NotAuthorized:
+      description: Not Authorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AuthorizationError'
+    NotAuthenticated:
+      description: Not Authenticated
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AuthenticationError'
+    InvalidContent:
+      description: Invalid Content Type
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/InvalidContentError'
+    Forbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AuthorizationError'
+    NotFound:
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NotFoundError'
+    FileSize:
+      description: File size exceeds server limits
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/FileSizeError'
+    DefaultError:
+      description: Unexpected error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
   parameters:
     paginationMode:
         name: paginationMode
@@ -773,9 +788,16 @@ components:
     paginationStartAfter:
         name: startAfter
         in: query
-        description: ID of the last object to skip (only used if paginatioMode is set to token)
+        description: ID of the last object to skip (only used if paginationMode is set to token)
         schema:
           type: string
+    timesPaginationStartAfter:
+        name: startAfter
+        in: query
+        description: startTime and ID of the last object to skip seperated by a semicolon (only used if paginationMode is set to token)
+        schema:
+          type: string
+        example: 1629905182;9df9021b-0aa1-4b12-b948-f44b7243f6b8
     paginationLimit:
         name: limit
         in: query
@@ -793,11 +815,77 @@ components:
         code:
           type: string
           description: Code string identifying the error
+          example: Error
+        description:
+          type: string
+          description: Detailled error description
+          example: Unexpected error
+    ValidationError:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Code string identifying the error
+          example: validation_failed
+        description:
+          type: string
+          description: Detailled error description
+          example: $.field is undefined
+    FileSizeError:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Code string identifying the error
+          example: Error
+        description:
+          type: string
+          description: Detailled error description
+          example: File size exceeds server limit
+    NotFoundError:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Code string identifying the error
           example: not_found
         description:
           type: string
           description: Detailled error description
-          example: Unable to find project 953c84c6-51ba-4536-b042-85dd20027d0c
+          example: Unable to find resource 953c84c6-51ba-4536-b042-85dd20027d0c
+    AuthenticationError:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Code string identifying the error
+          example: Error
+        description:
+          type: string
+          description: Detailled error description
+          example: '[token_not_found] The token could not be found'
+    AuthorizationError:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Code string identifying the error
+          example: Error
+        description:
+          type: string
+          description: Detailled error description
+          example: '[unauthorized] Not allowed to access this resource'
+    InvalidContentError:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Code string identifying the error
+          example: Error
+        description:
+          type: string
+          description: Detailled error description
+          example: 'Invalid content type'
     Contact:
       required:
       - name
@@ -910,18 +998,72 @@ components:
           description: User definable note
         projects:
           type: array
-          description: child project IDs (only applies to type FOLDER)
+          description: Child project IDs (only applies to type FOLDER)
           items:
             type: string
         parentProject:
           type: array
-          description: parent project ID (only applies to type PROJECT)
+          description: Parent project ID (only applies to type PROJECT)
           items:
             type: string
         archived:
           type: boolean
           description: Wether this project should be archived for all non-external
             members
+
+    CompanySetting:
+      type: object
+      properties:
+        status:
+          type: array
+          description: Different states that a project can have
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: Unique status id
+                example: 0000FFB2-9DC1-4A50-A8BB-14C899CC52FC
+              name:
+                type: string
+                description: Status name
+                example: Angebote
+              description:
+                type: string
+                description: Status description
+                example: Angebote in Vorbereitung
+        workingHours:
+          type: object
+          description: Working hours during which the company is open
+          properties:
+            start:
+              type: string
+              example: 07:00
+            end:
+              type: string
+              example: 17:00
+        workingDays:
+          type: array
+          description: Days during which the company is open, index of array is ISO day of week minus one 0 = Monday to 6 = Sunday.
+          items:
+            type: object
+            properties:
+              enabled:
+                type: boolean
+        workTypes:
+          type: array
+          description: Array of worktypes which can be used in time tracking
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: Unique work type id
+                example: a70a4076-3ba6-49e0-97b2-220735e2b2cc
+              name:
+                type: string
+                description: name of work work type
+                example: Arbeitszeit
     Project:
       required:
       - name
@@ -1133,6 +1275,166 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/Member"
+    Time:
+      type: object
+      description: A time entry for a project
+      properties:
+        id:
+          type: string
+          description: Unique time ID
+          example: 9df9021b-0aa1-4b12-b948-f44b7243f6b8
+        projectId:
+          type: string
+          description: Unique project ID
+          example: cf9058b2-e4f5-4fc1-bdfd-963236381273
+        creatorId:
+          type: string
+          description: Unique user ID of user that created the time entry
+          example: Dzcgx16hfbgt4saH8So7NJ5jbUf2
+        creationTime:
+          type: number
+          description: timestamp of creation time
+          example: 1629905182
+        userId:
+          type: string
+          description: Unique user ID of user that is assigned to the time entry
+          example: Dzcgx16hfbgt4saH8So7NJ5jbUf2
+        userName:
+          type: string
+          description: First and lastname of assigned user
+          example: "John Doe"
+        workTypeId:
+          type: string
+          description: Unique work type ID
+          example: 733d19ac-8d73-4b9d-952f-c0dc2e4f1512
+        lastEditedBy:
+          type: string
+          description: Unique user ID of last user that edited time entry
+          example: Dzcgx16hfbgt4saH8So7NJ5jbUf2
+        state:
+          type: string
+          description: Current state of the time entry
+          enum: [running, paused, stopped, deleted]
+          example: running
+        startTime:
+          type: number
+          description: Timestamp of time entry start
+          example: 1629905182
+        endTime:
+          type: number
+          description: Timestamp of time entry end
+          example: 1629905182
+        pauseStartTime:
+          type: number
+          description: Timestamp of start of the pause
+          example: 1629905182
+        pauseDuration:
+          type: number
+          description: Duration of pause in seconds
+          example: 3600
+        comment:
+          type: string
+          description: Comment that is shown for the time entry
+          example: I was stuck in traffic
+        taskId:
+          type: string
+          description: Task id of the task that the time entry is attached to
+          example: 733d19ac-8d73-4b9d-952f-c0dc2e4f1512
+
+    TimesList:
+      required:
+        - times
+      type: object
+      properties:
+        times:
+          type: array
+          items:
+            $ref: "#/components/schemas/Time"
+
+    AddTime:
+      required:
+        - userId
+        - state
+        - workTypeId
+        - startTime
+        - pauseDuration
+      type: object
+      properties:
+        userId:
+          type: string
+          description: Unique user ID of user that is assigned to the time entry
+          example: Dzcgx16hfbgt4saH8So7NJ5jbUf2
+        workTypeId:
+          type: string
+          description: Unique work type ID
+          example: 733d19ac-8d73-4b9d-952f-c0dc2e4f1512
+        state:
+          type: string
+          description: Current state of the time entry
+          enum: [ running, paused, stopped, deleted ]
+          example: running
+        startTime:
+          type: number
+          description: Timestamp of time entry start
+          example: 1629905182
+        endTime:
+          type: number
+          description: Timestamp of time entry end
+          example: 1629905182
+        pauseStartTime:
+          type: number
+          description: Timestamp of start of the pause
+          example: 1629905182
+        pauseDuration:
+          type: number
+          description: Duration of pause in seconds
+          example: 3600
+        comment:
+          type: string
+          description: Comment that is shown for the time entry
+          example: I was stuck in traffic
+        taskId:
+          type: string
+          description: Task id of the task that the time entry is attached to
+          example:  733d19ac-8d73-4b9d-952f-c0dc2e4f1512
+
+    PatchTime:
+      type: object
+      properties:
+        userId:
+          type: string
+          description: Unique user ID of user that is assigned to the time entry
+          example: Dzcgx16hfbgt4saH8So7NJ5jbUf2
+        workTypeId:
+          type: string
+          description: Unique work type ID
+          example: 733d19ac-8d73-4b9d-952f-c0dc2e4f1512
+        state:
+          type: string
+          description: Current state of the time entry
+          enum: [ running, paused, stopped, deleted ]
+          example: running
+        startTime:
+          type: number
+          description: Timestamp of time entry start
+          example: 1629905182
+        endTime:
+          type: number
+          description: Timestamp of time entry end
+          example: 1629905182
+        pauseStartTime:
+          type: number
+          description: Timestamp of start of the pause
+          example: 1629905182
+        pauseDuration:
+          type: number
+          description: Duration of pause in seconds
+          example: 3600
+        comment:
+          type: string
+          description: Comment that is shown for the time entry
+          example: I was stuck in traffic
+
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
