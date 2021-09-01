@@ -34,7 +34,7 @@ paths:
         400:
           $ref: '#/components/responses/BadRequest'
         401:
-          $ref: '#/components/responses/NotAuthorized'
+          $ref: '#/components/responses/NotAuthenticated'
         415:
           $ref: "#/components/responses/InvalidContent"
         default:
@@ -54,7 +54,7 @@ paths:
         400:
           $ref: '#/components/responses/BadRequest'
         401:
-          $ref: '#/components/responses/NotAuthorized'
+          $ref: '#/components/responses/NotAuthenticated'
         415:
           $ref: "#/components/responses/InvalidContent"
         default:
@@ -74,7 +74,7 @@ paths:
         400:
           $ref: '#/components/responses/BadRequest'
         401:
-          $ref: '#/components/responses/NotAuthorized'
+          $ref: '#/components/responses/NotAuthenticated'
         415:
           $ref: "#/components/responses/InvalidContent"
         default:
@@ -105,7 +105,7 @@ paths:
         400:
           $ref: '#/components/responses/BadRequest'
         401:
-          $ref: '#/components/responses/NotAuthorized'
+          $ref: '#/components/responses/NotAuthenticated'
         415:
           $ref: "#/components/responses/InvalidContent"
         default:
@@ -131,7 +131,7 @@ paths:
         400:
           $ref: '#/components/responses/BadRequest'
         401:
-          $ref: '#/components/responses/NotAuthorized'
+          $ref: '#/components/responses/NotAuthenticated'
         415:
           $ref: "#/components/responses/InvalidContent"
         default:
@@ -159,7 +159,7 @@ paths:
         400:
           $ref: '#/components/responses/BadRequest'
         401:
-          $ref: '#/components/responses/NotAuthorized'
+          $ref: '#/components/responses/NotAuthenticated'
         404:
           $ref: '#/components/responses/NotFound'
         default:
@@ -192,7 +192,7 @@ paths:
         400:
           $ref: '#/components/responses/BadRequest'
         401:
-          $ref: '#/components/responses/NotAuthorized'
+          $ref: '#/components/responses/NotAuthenticated'
         404:
           $ref: '#/components/responses/NotFound'
         default:
@@ -219,7 +219,7 @@ paths:
         400:
           $ref: '#/components/responses/BadRequest'
         401:
-          $ref: '#/components/responses/NotAuthorized'
+          $ref: '#/components/responses/NotAuthenticated'
         404:
           $ref: '#/components/responses/NotFound'
         default:
@@ -256,7 +256,7 @@ paths:
         400:
           $ref: '#/components/responses/BadRequest'
         401:
-          $ref: '#/components/responses/NotAuthorized'
+          $ref: '#/components/responses/NotAuthenticated'
         404:
           $ref: '#/components/responses/NotFound'
         default:
@@ -304,7 +304,7 @@ paths:
         400:
           $ref: '#/components/responses/BadRequest'
         401:
-          $ref: '#/components/responses/NotAuthorized'
+          $ref: '#/components/responses/NotAuthenticated'
         404:
           $ref: '#/components/responses/NotFound'
         413:
@@ -348,7 +348,7 @@ paths:
         400:
           $ref: '#/components/responses/BadRequest'
         401:
-          $ref: '#/components/responses/NotAuthorized'
+          $ref: '#/components/responses/NotAuthenticated'
         404:
           $ref: '#/components/responses/NotFound'
         413:
@@ -391,7 +391,7 @@ paths:
         400:
           $ref: '#/components/responses/BadRequest'
         401:
-          $ref: '#/components/responses/NotAuthorized'
+          $ref: '#/components/responses/NotAuthenticated'
         404:
           $ref: '#/components/responses/NotFound'
         413:
@@ -425,7 +425,7 @@ paths:
         400:
           $ref: '#/components/responses/BadRequest'
         401:
-          $ref: '#/components/responses/NotAuthorized'
+          $ref: '#/components/responses/NotAuthenticated'
         404:
           $ref: '#/components/responses/NotFound'
         default:
@@ -458,7 +458,7 @@ paths:
         400:
           $ref: '#/components/responses/BadRequest'
         401:
-          $ref: '#/components/responses/NotAuthorized'
+          $ref: '#/components/responses/NotAuthenticated'
         403:
           $ref: '#/components/responses/Forbidden'
         404:
@@ -494,7 +494,7 @@ paths:
         400:
           $ref: '#/components/responses/BadRequest'
         401:
-          $ref: '#/components/responses/NotAuthorized'
+          $ref: '#/components/responses/NotAuthenticated'
         403:
           $ref: '#/components/responses/Forbidden'
         404:
@@ -527,7 +527,7 @@ paths:
         400:
           $ref: '#/components/responses/BadRequest'
         401:
-          $ref: '#/components/responses/NotAuthorized'
+          $ref: '#/components/responses/NotAuthenticated'
         403:
           $ref: '#/components/responses/Forbidden'
         404:
@@ -562,7 +562,7 @@ paths:
         400:
           $ref: '#/components/responses/BadRequest'
         401:
-          $ref: '#/components/responses/NotAuthorized'
+          $ref: '#/components/responses/NotAuthenticated'
         403:
           $ref: '#/components/responses/Forbidden'
         404:
@@ -598,7 +598,7 @@ paths:
         400:
           $ref: '#/components/responses/BadRequest'
         401:
-          $ref: '#/components/responses/NotAuthorized'
+          $ref: '#/components/responses/NotAuthenticated'
         403:
           $ref: '#/components/responses/Forbidden'
         404:
@@ -632,7 +632,7 @@ paths:
         400:
           $ref: '#/components/responses/BadRequest'
         401:
-          $ref: '#/components/responses/NotAuthorized'
+          $ref: '#/components/responses/NotAuthenticated'
         403:
           $ref: '#/components/responses/Forbidden'
         404:
@@ -671,7 +671,7 @@ paths:
         400:
           $ref: '#/components/responses/BadRequest'
         401:
-          $ref: '#/components/responses/NotAuthorized'
+          $ref: '#/components/responses/NotAuthenticated'
         403:
           $ref: '#/components/responses/Forbidden'
         404:
@@ -710,7 +710,7 @@ paths:
         400:
           $ref: '#/components/responses/BadRequest'
         401:
-          $ref: '#/components/responses/NotAuthorized'
+          $ref: '#/components/responses/NotAuthenticated'
         403:
           $ref: '#/components/responses/Forbidden'
         404:
@@ -731,6 +731,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/AuthorizationError'
+    NotAuthenticated:
+      description: Not Authenticated
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AuthenticationError'
     InvalidContent:
       description: Invalid Content Type
       content:
@@ -847,6 +853,17 @@ components:
           type: string
           description: Detailled error description
           example: Unable to find project 953c84c6-51ba-4536-b042-85dd20027d0c
+    AuthenticationError:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Code string identifying the error
+          example: Error
+        description:
+          type: string
+          description: Detailled error description
+          example: '[token_not_found] The token could not be found'
     AuthorizationError:
       type: object
       properties:
@@ -857,7 +874,7 @@ components:
         description:
           type: string
           description: Detailled error description
-          example: '[unauthorized] Not allowed to access this project'
+          example: '[unauthorized] Not allowed to access this resource'
     InvalidContentError:
       type: object
       properties:
