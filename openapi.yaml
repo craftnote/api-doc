@@ -1,4 +1,4 @@
-openapi: 3.0.3
+openapi: 3.0.0
 info:
   title: Craftnote API
   description: API to manage projects, files and users in Craftnote.
@@ -32,26 +32,13 @@ paths:
               schema:
                 $ref: "#/components/schemas/MembersList"
         400:
-          description: Bad request
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/BadRequest'
         401:
-          description: Unable to authorize
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/NotAuthorized'
         415:
-          description: Invalid content type
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/InvalidContent"
         default:
-          description: Unexpected error
-          content: {}
+          $ref: '#/components/responses/DefaultError'
   /company/settings:
     get:
       tags:
@@ -65,26 +52,13 @@ paths:
               schema:
                 $ref: "#/components/schemas/CompanySetting"
         400:
-          description: Bad request
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/BadRequest'
         401:
-          description: Unable to authorize
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/NotAuthorized'
         415:
-          description: Invalid content type
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/InvalidContent"
         default:
-          description: Unexpected error
-          content: {}
+          $ref: '#/components/responses/DefaultError'
   /company/members/me:
     get:
       tags:
@@ -98,26 +72,13 @@ paths:
               schema:
                 $ref: "#/components/schemas/Member"
         400:
-          description: Bad request
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/BadRequest'
         401:
-          description: Unable to authorize
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: '#/components/responses/NotAuthorized'
         415:
-          description: Invalid content type
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/InvalidContent"
         default:
-          description: Unexpected error
-          content: {}
+          $ref: '#/components/responses/DefaultError'
   /projects:
     get:
       tags:
@@ -144,20 +105,11 @@ paths:
         400:
           $ref: '#/components/responses/BadRequest'
         401:
-          description: Unable to authorize
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/NotAuthorized'
         415:
-          description: Invalid content type
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: "#/components/responses/InvalidContent"
         default:
-          description: Unexpected error
-          content: {}
+          $ref: '#/components/responses/DefaultError'
     post:
       tags:
       - Projects
@@ -179,20 +131,11 @@ paths:
         400:
           $ref: '#/components/responses/BadRequest'
         401:
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/NotAuthorized'
         415:
-          description: Invalid content type
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: "#/components/responses/InvalidContent"
         default:
-          description: Unexpected error
-          content: {}
+          $ref: '#/components/responses/DefaultError'
       x-codegen-request-body-name: body
   /projects/{projectId}:
     get:
@@ -216,17 +159,9 @@ paths:
         400:
           $ref: '#/components/responses/BadRequest'
         401:
-          description: Not allowed to access this project
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/NotAuthorized'
         404:
-          description: Project ID was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/NotFound'
         default:
           $ref: '#/components/responses/DefaultError'
     put:
@@ -257,17 +192,9 @@ paths:
         400:
           $ref: '#/components/responses/BadRequest'
         401:
-          description: Not allowed to update this project
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/NotAuthorized'
         404:
-          description: Project ID was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/NotFound'
         default:
           $ref: '#/components/responses/DefaultError'
   /projects/{projectId}/deeplink:
@@ -292,17 +219,9 @@ paths:
         400:
           $ref: '#/components/responses/BadRequest'
         401:
-          description: Not allowed to access this project
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/NotAuthorized'
         404:
-          description: Project ID was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/NotFound'
         default:
           $ref: '#/components/responses/DefaultError'
   /projects/{projectId}/files:
@@ -337,17 +256,9 @@ paths:
         400:
           $ref: '#/components/responses/BadRequest'
         401:
-          description: Not allowed to access this project
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/NotAuthorized'
         404:
-          description: Project ID was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/NotFound'
         default:
           $ref: '#/components/responses/DefaultError'
     post:
@@ -391,35 +302,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/File'
         400:
-          description: Bad request
-          content:
-            multipart/form-data:
-              schema:
-                $ref: '#/components/schemas/Error'
-        403:
-          description: Not allowed to access this project
-          content:
-            multipart/form-data:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/NotAuthorized'
         404:
-          description: Project ID or folder ID were not found
-          content:
-            multipart/form-data:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/NotFound'
         413:
-          description: File size exceeds server limits
-          content:
-            multipart/form-data:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/FileSize'
         default:
-          description: Unexpected error
-          content:
-            multipart/form-data:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/DefaultError'
   /files/{fileId}:
     get:
       tags:
@@ -455,80 +346,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/File'
         400:
-          description: Bad request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-            image/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-            image/png:
-              schema:
-                $ref: '#/components/schemas/Error'
-            application/pdf:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/BadRequest'
         401:
-          description: Not allowed to access the project this file is associated with
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-            image/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-            image/png:
-              schema:
-                $ref: '#/components/schemas/Error'
-            application/pdf:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/NotAuthorized'
         404:
-          description: File ID was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-            image/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-            image/png:
-              schema:
-                $ref: '#/components/schemas/Error'
-            application/pdf:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/NotFound'
         413:
-          description: File size exceeds server limits
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-            image/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-            image/png:
-              schema:
-                $ref: '#/components/schemas/Error'
-            application/pdf:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/FileSize'
         default:
-          description: Unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-            image/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-            image/png:
-              schema:
-                $ref: '#/components/schemas/Error'
-            application/pdf:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/DefaultError'
     put:
       tags:
       - Project Files
@@ -563,35 +389,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/File'
         400:
-          description: Bad request
-          content:
-            multipart/form-data:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/BadRequest'
         401:
-          description: Not allowed to access the project this file is associated with
-          content:
-            multipart/form-data:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/NotAuthorized'
         404:
-          description: Project ID or folder ID were not found
-          content:
-            multipart/form-data:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/NotFound'
         413:
-          description: File size exceeds server limits
-          content:
-            multipart/form-data:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/FileSize'
         default:
-          description: Unexpected error
-          content:
-            multipart/form-data:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/DefaultError'
   /projects/{projectId}/members:
     get:
       tags:
@@ -619,17 +425,9 @@ paths:
         400:
           $ref: '#/components/responses/BadRequest'
         401:
-          description: Not allowed to access this project ID
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/NotAuthorized'
         404:
-          description: Project ID was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/NotFound'
         default:
           $ref: '#/components/responses/DefaultError'
     post:
@@ -659,24 +457,12 @@ paths:
                 $ref: '#/components/schemas/MembersList'
         400:
           $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/NotAuthorized'
         403:
-          description: Not allowed to access this project ID or edit members
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/Forbidden'
         404:
-          description: Project ID or folder ID were not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-        413:
-          description: File size exceeds server limits
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/NotFound'
         default:
           $ref: '#/components/responses/DefaultError'
       x-codegen-request-body-name: body
@@ -708,17 +494,11 @@ paths:
         400:
           $ref: '#/components/responses/BadRequest'
         401:
-          description: Not allowed to access this project ID or edit members
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/NotAuthorized'
+        403:
+          $ref: '#/components/responses/Forbidden'
         404:
-          description: Project ID or member ID were not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/NotFound'
         default:
           $ref: '#/components/responses/DefaultError'
   /projects/{projectId}/times:
@@ -747,17 +527,11 @@ paths:
         400:
           $ref: '#/components/responses/BadRequest'
         401:
-          description: Not allowed to access this project ID
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/NotAuthorized'
+        403:
+          $ref: '#/components/responses/Forbidden'
         404:
-          description: Project ID was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/NotFound'
         default:
           $ref: '#/components/responses/DefaultError'
     post:
@@ -787,18 +561,12 @@ paths:
                 $ref: '#/components/schemas/Time'
         400:
           $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/NotAuthorized'
         403:
-          description: Not allowed to access this project ID or edit members
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/Forbidden'
         404:
-          description: Project ID or folder ID were not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/NotFound'
         default:
           $ref: '#/components/responses/DefaultError'
       x-codegen-request-body-name: body
@@ -830,17 +598,11 @@ paths:
         400:
           $ref: '#/components/responses/BadRequest'
         401:
-          description: Not allowed to access the project this time is associated with
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/NotAuthorized'
+        403:
+          $ref: '#/components/responses/Forbidden'
         404:
-          description: Time or project ID was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/NotFound'
         default:
           $ref: '#/components/responses/DefaultError'
     get:
@@ -870,17 +632,11 @@ paths:
         400:
           $ref: '#/components/responses/BadRequest'
         401:
-          description: Not allowed to access the project this time is associated with
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/NotAuthorized'
+        403:
+          $ref: '#/components/responses/Forbidden'
         404:
-          description: Time or project ID was not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/NotFound'
         default:
           $ref: '#/components/responses/DefaultError'
     put:
@@ -915,17 +671,11 @@ paths:
         400:
           $ref: '#/components/responses/BadRequest'
         401:
-          description: Not allowed to access the project this time entry is associated with
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/NotAuthorized'
+        403:
+          $ref: '#/components/responses/Forbidden'
         404:
-          description: Project ID or time ID were not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/NotFound'
         default:
           $ref: '#/components/responses/DefaultError'
     patch:
@@ -960,17 +710,11 @@ paths:
         400:
           $ref: '#/components/responses/BadRequest'
         401:
-          description: Not allowed to access the project this time entry is associated with
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/NotAuthorized'
+        403:
+          $ref: '#/components/responses/Forbidden'
         404:
-          description: Project ID or time ID were not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: '#/components/responses/NotFound'
         default:
           $ref: '#/components/responses/DefaultError'
 components:
@@ -980,7 +724,37 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Error'
+            $ref: '#/components/schemas/ValidationError'
+    NotAuthorized:
+      description: Not Authorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AuthorizationError'
+    InvalidContent:
+      description: Invalid Content Type
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/InvalidContentError'
+    Forbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AuthorizationError'
+    NotFound:
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NotFoundError'
+    FileSize:
+      description: File size exceeds server limits
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/FileSizeError'
     DefaultError:
       description: Unexpected error
       content:
@@ -1040,6 +814,61 @@ components:
           type: string
           description: Detailled error description
           example: Unable to find project 953c84c6-51ba-4536-b042-85dd20027d0c
+    ValidationError:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Code string identifying the error
+          example: validation_failed
+        description:
+          type: string
+          description: Detailled error description
+          example: $.field is undefined
+    FileSizeError:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Code string identifying the error
+          example: Error
+        description:
+          type: string
+          description: Detailled error description
+          example: File size exceeds server limit
+    NotFoundError:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Code string identifying the error
+          example: not_found
+        description:
+          type: string
+          description: Detailled error description
+          example: Unable to find project 953c84c6-51ba-4536-b042-85dd20027d0c
+    AuthorizationError:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Code string identifying the error
+          example: Error
+        description:
+          type: string
+          description: Detailled error description
+          example: '[unauthorized] Not allowed to access this project'
+    InvalidContentError:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Code string identifying the error
+          example: Error
+        description:
+          type: string
+          description: Detailled error description
+          example: 'Invalid content type'
     Contact:
       required:
       - name
