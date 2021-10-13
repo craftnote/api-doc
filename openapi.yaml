@@ -1217,13 +1217,17 @@ components:
           description: File type (FOLDER, DOCUMENT, IMAGE, AUDIO, VIDEO)
           example: DOCUMENT
         creationTimestamp:
-          type: string
+          type: integer
           description: Creation timestamp (seconds since UNIX epoch)
-          example: "1567685998"
+          example: 1567685998
+        lastModifiedTimestamp:
+          type: integer
+          description: Last modified timestamp (seconds since UNIX epoch)
+          example: 1587291223
         size:
           type: number
           description: File size in bytes
-          example: 2450.0
+          example: 2450
     FilesList:
       required:
       - files
