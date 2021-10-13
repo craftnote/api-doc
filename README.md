@@ -365,7 +365,8 @@ INFO: This manages project files. Please be aware that a project also has a chat
             "projectId": "DB5B9A4D-7589-4AF4-8C79-A96A3B796DC9",
             "folderId": "7A082960-E44C-4B67-AAB0-294BFB3F5095",
             "type": "IMAGE",
-            "creationTimestamp": 1568133879
+            "creationTimestamp": 1568133879,
+            "lastModifiedTimestamp": 1568133879,
         },
         {
             "id": "7A082960-E44C-4B67-AAB0-294BFB3F5095",
@@ -373,7 +374,8 @@ INFO: This manages project files. Please be aware that a project also has a chat
             "projectId": "DB5B9A4D-7589-4AF4-8C79-A96A3B796DC9",
             "folderId": null,
             "type": "FOLDER",
-            "creationTimestamp": 1568133879
+            "creationTimestamp": 1568133879,
+            "lastModifiedTimestamp": 1568133879,
         }
     ]
 }
