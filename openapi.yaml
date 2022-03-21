@@ -717,6 +717,43 @@ paths:
           $ref: '#/components/responses/NotFound'
         default:
           $ref: '#/components/responses/DefaultError'
+  /times:
+    get:
+      tags:
+        - Times
+      description: List all times of the company.
+      parameters:
+        - $ref: "#/components/parameters/paginationMode"
+        - $ref: "#/components/parameters/paginationOffset"
+        - $ref: "#/components/parameters/paginationLimit"
+        - $ref: "#/components/parameters/timesPaginationStartAfter"
+        - name: from
+          in: query
+          description: Include only times with a start time greater or equal to this field (seconds since UNIX epoch)
+          schema:
+            type: integer
+        - name: until
+          in: query
+          description: Include only times with a start time smaller or equal than this field (seconds since UNIX epoch)
+          schema:
+            type: integer
+      responses:
+        200:
+          description: List returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TimesList'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/NotAuthenticated'
+        403:
+          $ref: '#/components/responses/Forbidden'
+        404:
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/DefaultError'
 components:
   responses:
     BadRequest:
@@ -1379,11 +1416,11 @@ components:
           example: running
         startTime:
           type: number
-          description: Timestamp of time entry start
+          description: Timestamp of time entry start (seconds since UNIX epoch)
           example: 1629905182
         endTime:
           type: number
-          description: Timestamp of time entry end
+          description: Timestamp of time entry end (seconds since UNIX epoch)
           example: 1629905182
         pauseStartTime:
           type: number
