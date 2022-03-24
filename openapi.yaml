@@ -517,6 +517,16 @@ paths:
         - $ref: "#/components/parameters/paginationOffset"
         - $ref: "#/components/parameters/paginationLimit"
         - $ref: "#/components/parameters/timesPaginationStartAfter"
+        - name: since
+          in: query
+          description: Include only times with a start time greater or equal to this field (seconds since UNIX epoch)
+          schema:
+            type: integer
+        - name: until
+          in: query
+          description: Include only times with a start time smaller or equal than this field (seconds since UNIX epoch)
+          schema:
+            type: integer
       responses:
         200:
           description: List returned successfully
@@ -727,7 +737,7 @@ paths:
         - $ref: "#/components/parameters/paginationOffset"
         - $ref: "#/components/parameters/paginationLimit"
         - $ref: "#/components/parameters/timesPaginationStartAfter"
-        - name: from
+        - name: since
           in: query
           description: Include only times with a start time greater or equal to this field (seconds since UNIX epoch)
           schema:
