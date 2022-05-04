@@ -1289,7 +1289,7 @@ components:
       - userId
       type: object
       properties:
-        id:
+        userId:
           type: string
           description: Unique ID of the member
           example: Ka3gh32ashtQJuuas9
