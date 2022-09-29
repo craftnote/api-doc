@@ -10,20 +10,20 @@ info:
     name: proprietary
   version: 1.3.0
 servers:
-- url:  https://europe-west1-craftnote-live.cloudfunctions.net/api/v1
+  - url:  https://europe-west1-craftnote-live.cloudfunctions.net/api/v1
 security:
   - ApiKeyAuth: []
 paths:
   /company/members:
     get:
       tags:
-      - Company Members
+        - Company Members
       description: List employees of the company associated with the API key.
       parameters:
-      - $ref: "#/components/parameters/paginationMode"
-      - $ref: "#/components/parameters/paginationOffset"
-      - $ref: "#/components/parameters/paginationLimit"
-      - $ref: "#/components/parameters/paginationStartAfter"
+        - $ref: "#/components/parameters/paginationMode"
+        - $ref: "#/components/parameters/paginationOffset"
+        - $ref: "#/components/parameters/paginationLimit"
+        - $ref: "#/components/parameters/paginationStartAfter"
       responses:
         200:
           description: List returned successfully
@@ -42,7 +42,7 @@ paths:
   /company/settings:
     get:
       tags:
-      - Company Settings
+        - Company Settings
       description: Returns the company settings.
       responses:
         200:
@@ -59,10 +59,141 @@ paths:
           $ref: "#/components/responses/InvalidContent"
         default:
           $ref: '#/components/responses/DefaultError'
+  /company/settings/projectstatus:
+    get:
+      tags:
+        - Project Status
+      description: Lists all defined project statuses.
+      responses:
+        200:
+          description: List returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProjectStatusList"
+        401:
+          $ref: '#/components/responses/NotAuthenticated'
+        415:
+          $ref: "#/components/responses/InvalidContent"
+        default:
+          $ref: '#/components/responses/DefaultError'
+  /company/settings/projectstatus/{statusId}:
+    get:
+      tags:
+        - Project Status
+      description: Retrieves an individual project status.
+      parameters:
+        - name: statusId
+          in: path
+          description: ID of the project status
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Status returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProjectStatus"
+        401:
+          $ref: '#/components/responses/NotAuthenticated'
+        404:
+          $ref: '#/components/responses/NotFound'
+        415:
+          $ref: "#/components/responses/InvalidContent"
+        default:
+          $ref: '#/components/responses/DefaultError'
+    post:
+      tags:
+        - Project Status
+      description: Creates a new project status.
+      parameters:
+        - name: statusId
+          in: path
+          description: ID of the project status
+          required: true
+          schema:
+            type: string
+        - name: insertAfter
+          in: query
+          description: Per default the newly created project status gets inserted at the beginning of the list. Using this parameter the status can get inserted after any existing status by setting this parameter to the ID of the existing status.
+          required: false
+          schema:
+            type: string
+      responses:
+        200:
+          description: Status created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreateProjectStatus"
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/NotAuthenticated'
+        404:
+          $ref: '#/components/responses/NotFound'
+        415:
+          $ref: "#/components/responses/InvalidContent"
+        default:
+          $ref: '#/components/responses/DefaultError'
+    patch:
+      tags:
+        - Project Status
+      description: Updates an existing project status.
+      parameters:
+        - name: statusId
+          in: path
+          description: ID of the project status
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Status updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UpdateProjectStatus"
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/NotAuthenticated'
+        404:
+          $ref: '#/components/responses/NotFound'
+        415:
+          $ref: "#/components/responses/InvalidContent"
+        default:
+          $ref: '#/components/responses/DefaultError'
+    delete:
+      tags:
+        - Project Status
+      description: Deletes an existing project status.
+      parameters:
+        - name: statusId
+          in: path
+          description: ID of the project status
+          required: true
+          schema:
+            type: string
+      responses:
+        204:
+          description: Status deleted successfully
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/NotAuthenticated'
+        404:
+          $ref: '#/components/responses/NotFound'
+        415:
+          $ref: "#/components/responses/InvalidContent"
+        default:
+          $ref: '#/components/responses/DefaultError'
   /company/members/me:
     get:
       tags:
-      - Company Members
+        - Company Members
       description: Returns the member that is associated with the API key in use
       responses:
         200:
@@ -82,19 +213,19 @@ paths:
   /projects:
     get:
       tags:
-      - Projects
+        - Projects
       description: List all projects of the company.
       parameters:
-      - name: offset
-        in: query
-        description: Number of items to skip
-        schema:
-          type: integer
-      - name: limit
-        in: query
-        description: Numbers of items to return (maximum 100)
-        schema:
-          type: integer
+        - name: offset
+          in: query
+          description: Number of items to skip
+          schema:
+            type: integer
+        - name: limit
+          in: query
+          description: Numbers of items to return (maximum 100)
+          schema:
+            type: integer
       responses:
         200:
           description: List returned successfully
@@ -112,7 +243,7 @@ paths:
           $ref: '#/components/responses/DefaultError'
     post:
       tags:
-      - Projects
+        - Projects
       description: Create new project/folder
       requestBody:
         description: Project data
@@ -140,15 +271,15 @@ paths:
   /projects/{projectId}:
     get:
       tags:
-      - Projects
+        - Projects
       description: Retrieve individual project
       parameters:
-      - name: projectId
-        in: path
-        description: ID of the project
-        required: true
-        schema:
-          type: string
+        - name: projectId
+          in: path
+          description: ID of the project
+          required: true
+          schema:
+            type: string
       responses:
         200:
           description: Project returned succesfully
@@ -166,15 +297,15 @@ paths:
           $ref: '#/components/responses/DefaultError'
     put:
       tags:
-      - Projects
+        - Projects
       description: Update project
       parameters:
-      - name: projectId
-        in: path
-        description: ID of the project
-        required: true
-        schema:
-          type: string
+        - name: projectId
+          in: path
+          description: ID of the project
+          required: true
+          schema:
+            type: string
       requestBody:
         description: Project data
         content:
@@ -200,15 +331,15 @@ paths:
   /projects/{projectId}/deeplink:
     get:
       tags:
-      - Projects
+        - Projects
       description: Retrieve a project deeplink
       parameters:
-      - name: projectId
-        in: path
-        description: ID of the project
-        required: true
-        schema:
-          type: string
+        - name: projectId
+          in: path
+          description: ID of the project
+          required: true
+          schema:
+            type: string
       responses:
         200:
           description: Project deeplink returned succesfully
@@ -227,25 +358,25 @@ paths:
   /projects/{projectId}/files:
     get:
       tags:
-      - Project Files
+        - Project Files
       description: List all files of a project
       parameters:
-      - name: projectId
-        in: path
-        description: ID of the project
-        required: true
-        schema:
-          type: string
-      - name: offset
-        in: query
-        description: Number of items to skip
-        schema:
-          type: integer
-      - name: limit
-        in: query
-        description: Numbers of items to return (maximum 100)
-        schema:
-          type: integer
+        - name: projectId
+          in: path
+          description: ID of the project
+          required: true
+          schema:
+            type: string
+        - name: offset
+          in: query
+          description: Number of items to skip
+          schema:
+            type: integer
+        - name: limit
+          in: query
+          description: Numbers of items to return (maximum 100)
+          schema:
+            type: integer
       responses:
         200:
           description: List returned successfully
@@ -263,21 +394,21 @@ paths:
           $ref: '#/components/responses/DefaultError'
     post:
       tags:
-      - Project Files
+        - Project Files
       description: Create file/folder
       parameters:
-      - name: projectId
-        in: path
-        description: ID of the project
-        required: true
-        schema:
-          type: string
+        - name: projectId
+          in: path
+          description: ID of the project
+          required: true
+          schema:
+            type: string
       requestBody:
         content:
           multipart/form-data:
             schema:
               required:
-              - type
+                - type
               properties:
                 type:
                   type: string
@@ -314,21 +445,21 @@ paths:
   /files/{fileId}:
     get:
       tags:
-      - Project Files
+        - Project Files
       description: Get a file/folder
       parameters:
-      - name: fileId
-        in: path
-        description: The ID of the file.
-        required: true
-        schema:
-          type: string
-      - name: download
-        in: query
-        description: Whether to download this file. If selected the response will
-          contain the file content instead of its meta data.
-        schema:
-          type: boolean
+        - name: fileId
+          in: path
+          description: The ID of the file.
+          required: true
+          schema:
+            type: string
+        - name: download
+          in: query
+          description: Whether to download this file. If selected the response will
+            contain the file content instead of its meta data.
+          schema:
+            type: boolean
       responses:
         200:
           description: File returned successfully
@@ -357,15 +488,15 @@ paths:
           $ref: '#/components/responses/DefaultError'
     put:
       tags:
-      - Project Files
+        - Project Files
       description: Update a file/folder
       parameters:
-      - name: fileId
-        in: path
-        description: The ID of the file.
-        required: true
-        schema:
-          type: string
+        - name: fileId
+          in: path
+          description: The ID of the file.
+          required: true
+          schema:
+            type: string
       requestBody:
         content:
           multipart/form-data:
@@ -401,20 +532,20 @@ paths:
   /projects/{projectId}/members:
     get:
       tags:
-      - Project Members
+        - Project Members
       description: List all members of a project.
         yet!
       parameters:
-      - name: projectId
-        in: path
-        description: The ID of the project.
-        required: true
-        schema:
-          type: string
-      - $ref: "#/components/parameters/paginationMode"
-      - $ref: "#/components/parameters/paginationOffset"
-      - $ref: "#/components/parameters/paginationLimit"
-      - $ref: "#/components/parameters/paginationStartAfter"
+        - name: projectId
+          in: path
+          description: The ID of the project.
+          required: true
+          schema:
+            type: string
+        - $ref: "#/components/parameters/paginationMode"
+        - $ref: "#/components/parameters/paginationOffset"
+        - $ref: "#/components/parameters/paginationLimit"
+        - $ref: "#/components/parameters/paginationStartAfter"
       responses:
         200:
           description: List returned successfully
@@ -432,15 +563,15 @@ paths:
           $ref: '#/components/responses/DefaultError'
     post:
       tags:
-      - Project Members
+        - Project Members
       description: Add a user to a project.
       parameters:
-      - name: projectId
-        in: path
-        description: The ID of the project.
-        required: true
-        schema:
-          type: string
+        - name: projectId
+          in: path
+          description: The ID of the project.
+          required: true
+          schema:
+            type: string
       requestBody:
         description: The user to add
         content:
@@ -469,21 +600,21 @@ paths:
   /projects/{projectId}/members/{userId}:
     delete:
       tags:
-      - Project Members
+        - Project Members
       description: Remove a member from a project
       parameters:
-      - name: projectId
-        in: path
-        description: The ID of the project.
-        required: true
-        schema:
-          type: string
-      - name: userId
-        in: path
-        description: The ID of the member.
-        required: true
-        schema:
-          type: string
+        - name: projectId
+          in: path
+          description: The ID of the project.
+          required: true
+          schema:
+            type: string
+        - name: userId
+          in: path
+          description: The ID of the member.
+          required: true
+          schema:
+            type: string
       responses:
         200:
           description: Member removed succesfully
@@ -560,7 +691,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AddTime'
+              $ref: '#/components/schemas/CreateTime'
         required: true
       responses:
         200:
@@ -670,7 +801,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AddTime'
+              $ref: '#/components/schemas/CreateTime'
       responses:
         200:
           description: Time entry replaced successfully
@@ -709,7 +840,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PatchTime'
+              $ref: '#/components/schemas/UpdateTime'
       responses:
         200:
           description: time entry replaced successfully
@@ -817,46 +948,46 @@ components:
 
   parameters:
     paginationMode:
-        name: paginationMode
-        in: query
-        description: Whether to use offset- or token based pagination
-        schema:
-          type: string
-          default: offset
-          enum: ["offset", "token"]
+      name: paginationMode
+      in: query
+      description: Whether to use offset- or token based pagination
+      schema:
+        type: string
+        default: offset
+        enum: ["offset", "token"]
     paginationOffset:
-        name: offset
-        in: query
-        description: Number of items to skip
-        schema:
-          type: integer
-          minimum: 0
-          default: 0
+      name: offset
+      in: query
+      description: Number of items to skip
+      schema:
+        type: integer
+        minimum: 0
+        default: 0
     paginationStartAfter:
-        name: startAfter
-        in: query
-        description: ID of the last object to skip (only used if paginationMode is set to token)
-        schema:
-          type: string
+      name: startAfter
+      in: query
+      description: ID of the last object to skip (only used if paginationMode is set to token)
+      schema:
+        type: string
     timesPaginationStartAfter:
-        name: startAfter
-        in: query
-        description: startTime and ID of the last object to skip seperated by a semicolon (only used if paginationMode is set to token)
-        schema:
-          type: string
-        example: 1629905182;9df9021b-0aa1-4b12-b948-f44b7243f6b8
+      name: startAfter
+      in: query
+      description: startTime and ID of the last object to skip seperated by a semicolon (only used if paginationMode is set to token)
+      schema:
+        type: string
+      example: 1629905182;9df9021b-0aa1-4b12-b948-f44b7243f6b8
     paginationLimit:
-        name: limit
-        in: query
-        description: Maximum numbers of items to return
-        schema:
-          type: integer
-          maximum: 100
-          default: 100
+      name: limit
+      in: query
+      description: Maximum numbers of items to return
+      schema:
+        type: integer
+        maximum: 100
+        default: 100
   schemas:
     Error:
       required:
-      - message
+        - message
       type: object
       properties:
         code:
@@ -935,7 +1066,7 @@ components:
           example: 'Invalid content type'
     Contact:
       required:
-      - name
+        - name
       type: object
       properties:
         name:
@@ -946,21 +1077,21 @@ components:
           type: array
           description: Email address of the contact
           example:
-          - huber@t-online.de
-          - willy291@gmx.de
+            - huber@t-online.de
+            - willy291@gmx.de
           items:
             type: string
         phones:
           type: array
           description: Phone number of the contact
           example:
-          - +49 711 21893732
-          - +49 711 21893733
+            - +49 711 21893732
+            - +49 711 21893733
           items:
             type: string
     CreateProject:
       required:
-      - name
+        - name
       type: object
       properties:
         name:
@@ -1057,7 +1188,56 @@ components:
           type: boolean
           description: Wether this project should be archived for all non-external
             members
-
+    ProjectStatus:
+      required:
+        - name
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique status ID
+          example: 0000FFB2-9DC1-4A50-A8BB-14C899CC52FC
+        name:
+          type: string
+          description: Status name
+          example: Angebote
+        description:
+          type: string
+          description: Status description
+          example: Angebote in Vorbereitung
+    ProjectStatusList:
+      required:
+        - data
+      type: object
+      properties:
+        members:
+          type: array
+          items:
+            $ref: "#/components/schemas/ProjectStatus"
+    CreateProjectStatus:
+      required:
+        - name
+      type: object
+      properties:
+        name:
+          type: string
+          description: Status name
+          example: Angebote
+        description:
+          type: string
+          description: Status description
+          example: Angebote in Vorbereitung
+    UpdateProjectStatus:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Status name
+          example: Angebote
+        description:
+          type: string
+          description: Status description
+          example: Angebote in Vorbereitung
     CompanySetting:
       type: object
       properties:
@@ -1065,20 +1245,7 @@ components:
           type: array
           description: Different states that a project can have
           items:
-            type: object
-            properties:
-              id:
-                type: string
-                description: Unique status id
-                example: 0000FFB2-9DC1-4A50-A8BB-14C899CC52FC
-              name:
-                type: string
-                description: Status name
-                example: Angebote
-              description:
-                type: string
-                description: Status description
-                example: Angebote in Vorbereitung
+            $ref: '#/components/schemas/ProjectStatus'
         workingHours:
           type: object
           description: Working hours during which the company is open
@@ -1113,7 +1280,7 @@ components:
                 example: Arbeitszeit
     Project:
       required:
-      - name
+        - name
       type: object
       properties:
         id:
@@ -1215,7 +1382,7 @@ components:
           description: Wether this project is archived for all non-external members
     ProjectsList:
       required:
-      - projects
+        - projects
       type: object
       properties:
         projects:
@@ -1224,8 +1391,8 @@ components:
             $ref: '#/components/schemas/Project'
     Deeplink:
       required:
-      - appDeepLink
-      - webLink
+        - appDeepLink
+        - webLink
       type: object
       properties:
         webLink:
@@ -1238,9 +1405,9 @@ components:
           example: mycrafty://project?id=0DDAAAA9-2508-4AAF-A576-E91E76EA8CDB
     File:
       required:
-      - id
-      - name
-      - type
+        - id
+        - name
+        - type
       type: object
       properties:
         id:
@@ -1277,7 +1444,7 @@ components:
           example: 2450
     FilesList:
       required:
-      - files
+        - files
       type: object
       properties:
         files:
@@ -1286,7 +1453,7 @@ components:
             $ref: '#/components/schemas/File'
     AddMember:
       required:
-      - userId
+        - userId
       type: object
       properties:
         userId:
@@ -1319,7 +1486,7 @@ components:
           example: Gauss
     MembersList:
       required:
-      - members
+        - members
       type: object
       properties:
         members:
@@ -1402,7 +1569,7 @@ components:
           items:
             $ref: "#/components/schemas/Time"
 
-    AddTime:
+    CreateTime:
       required:
         - userId
         - state
@@ -1449,7 +1616,7 @@ components:
           description: Task id of the task that the time entry is attached to
           example:  733d19ac-8d73-4b9d-952f-c0dc2e4f1512
 
-    PatchTime:
+    UpdateTime:
       type: object
       properties:
         userId:
