@@ -1180,10 +1180,8 @@ components:
           items:
             type: string
         parentProject:
-          type: array
+          type: string
           description: Parent project ID (only applies to type PROJECT)
-          items:
-            type: string
         archived:
           type: boolean
           description: Wether this project should be archived for all non-external
@@ -1373,10 +1371,8 @@ components:
           items:
             type: string
         parentProject:
-          type: array
+          type: string
           description: parent project ID (only applies to type PROJECT)
-          items:
-            type: string
         archived:
           type: boolean
           description: Wether this project is archived for all non-external members
