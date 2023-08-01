@@ -358,7 +358,7 @@ This is a paginated endpoint. The `archived` flag shows if a project is archived
 }
 ```
 
-### Update project
+### Replace project
 `PUT /projects/<projectId>`
 ```json
 {
@@ -378,6 +378,21 @@ This is a paginated endpoint. The `archived` flag shows if a project is archived
     "billingCity": "Berlin",
     "parentProject": "46B6D771-492E-4841-8D0C-012328BB1031",
     "statusId": "e3f98abb-09f5-434c-af41-42d1b429babd"
+}
+```
+
+You can archive projects for all non-external members by setting the `archived` flag in an update request:
+```
+...
+"archived": true
+...
+```
+
+### Update project
+`PATCH /projects/<projectId>`
+```json
+{
+    "name": "My Changed name"
 }
 ```
 
@@ -478,10 +493,32 @@ file=<image.png>
 
 ### Update file
 ```
-PUT /files/<projectId>
+PUT /files/<fileId>
 type=image
 file=<image.png>
 ```
+
+### Setting file permissions
+Permissions can be on root level folders set during creation or when updating a file folder
+```
+POST /files/<fileId>
+type=folder
+name=Folder
+permission=EMPLOYEE
+permission=EXTERNAL
+```
+
+```
+PUT /files/<fileId>
+type=folder
+name=Folder
+permission=EMPLOYEE
+permission=EXTERNAL
+```
+
+You can set permissions for `EMPLOYEE`, `EXTERNAL`, `SUPERVISOR`, `EXTERNAL_SUPERVISOR` and `OWNER`.
+
+
 
 ## Managing Work Times
 ### List all work times of company
