@@ -1192,8 +1192,8 @@ components:
           description: Parent project ID (only applies to type PROJECT)
         archived:
           type: boolean
-          description: Wether this project should be archived for all non-external
-            members
+          description: Wether this project should be archived for all non-external members
+          example: false
     ProjectStatus:
       required:
         - name
@@ -1388,6 +1388,7 @@ components:
         archived:
           type: boolean
           description: Wether this project is archived for all non-external members
+          example: false
     ProjectsList:
       required:
         - projects
