@@ -1216,7 +1216,7 @@ components:
         - data
       type: object
       properties:
-        members:
+        data:
           type: array
           items:
             $ref: "#/components/schemas/ProjectStatus"
