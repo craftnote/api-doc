@@ -862,33 +862,29 @@ paths:
           $ref: '#/components/responses/NotFound'
         default:
           $ref: '#/components/responses/DefaultError'
-  /times:
+  /projects/{projectId}/tasks:
     get:
       tags:
-        - Times
-      description: List all times of the company.
+        - Project Tasks
+      description: List all tasks of a project.
       parameters:
+        - name: projectId
+          in: path
+          description: The ID of the project.
+          required: true
+          schema:
+            type: string
         - $ref: "#/components/parameters/paginationMode"
         - $ref: "#/components/parameters/paginationOffset"
         - $ref: "#/components/parameters/paginationLimit"
-        - $ref: "#/components/parameters/timesPaginationStartAfter"
-        - name: since
-          in: query
-          description: Include only times with a start time greater or equal to this field (seconds since UNIX epoch)
-          schema:
-            type: integer
-        - name: until
-          in: query
-          description: Include only times with a start time smaller or equal than this field (seconds since UNIX epoch)
-          schema:
-            type: integer
+        - $ref: "#/components/parameters/paginationStartAfter"
       responses:
         200:
           description: List returned successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TimesList'
+                $ref: '#/components/schemas/TasksList'
         400:
           $ref: '#/components/responses/BadRequest'
         401:
@@ -899,6 +895,459 @@ paths:
           $ref: '#/components/responses/NotFound'
         default:
           $ref: '#/components/responses/DefaultError'
+    post:
+      tags:
+        - Project Tasks
+      description: Add a task to a project.
+      parameters:
+        - name: projectId
+          in: path
+          description: The ID of the project.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: The task to add
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTask'
+        required: true
+      responses:
+        200:
+          description: Task added successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/NotAuthenticated'
+        403:
+          $ref: '#/components/responses/Forbidden'
+        404:
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/DefaultError'
+      x-codegen-request-body-name: body
+  /projects/{projectId}/tasks/{taskId}:
+    delete:
+      tags:
+        - Project Tasks
+      description: Deletes a task from the project
+      parameters:
+        - name: projectId
+          in: path
+          description: The ID of the project.
+          required: true
+          schema:
+            type: string
+        - name: taskId
+          in: path
+          description: The ID of the task.
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Task has been deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/NotAuthenticated'
+        403:
+          $ref: '#/components/responses/Forbidden'
+        404:
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/DefaultError'
+    get:
+      tags:
+        - Project Tasks
+      description: Get a task
+      parameters:
+        - name: projectId
+          in: path
+          description: The ID of the project.
+          required: true
+          schema:
+            type: string
+        - name: taskId
+          in: path
+          description: The ID of the task.
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Task returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/NotAuthenticated'
+        403:
+          $ref: '#/components/responses/Forbidden'
+        404:
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/DefaultError'
+    put:
+      tags:
+        - Project Tasks
+      description: Replace a task
+      parameters:
+        - name: projectId
+          in: path
+          description: The ID of the project.
+          required: true
+          schema:
+            type: string
+        - name: taskId
+          in: path
+          description: The ID of the task.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTask'
+      responses:
+        200:
+          description: Task replaced successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/NotAuthenticated'
+        403:
+          $ref: '#/components/responses/Forbidden'
+        404:
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/DefaultError'
+    patch:
+      tags:
+        - Project Tasks
+      description: Update a task
+      parameters:
+        - name: projectId
+          in: path
+          description: The ID of the project.
+          required: true
+          schema:
+            type: string
+        - name: taskId
+          in: path
+          description: The ID of the task.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateTask'
+      responses:
+        200:
+          description: Task updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/NotAuthenticated'
+        403:
+          $ref: '#/components/responses/Forbidden'
+        404:
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/DefaultError'
+  /projects/{projectId}/messages:
+    get:
+      tags:
+        - Chat Messages
+      description: List all messages in a project.
+      parameters:
+        - name: projectId
+          in: path
+          description: The ID of the project.
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: List returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MessagesList"
+        400:
+          $ref: "#/components/responses/BadRequest"
+        401:
+          $ref: "#/components/responses/NotAuthenticated"
+        403:
+          $ref: "#/components/responses/Forbidden"
+        404:
+          $ref: "#/components/responses/NotFound"
+        default:
+          $ref: "#/components/responses/DefaultError"
+    post:
+      tags:
+        - Chat Messages
+      description: Create a new message in a project.
+      parameters:
+        - name: projectId
+          in: path
+          description: The ID of the project.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: The message to create
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateMessage"
+        required: true
+      responses:
+        200:
+          description: Message created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Message"
+        400:
+          $ref: "#/components/responses/BadRequest"
+        401:
+          $ref: "#/components/responses/NotAuthenticated"
+        403:
+          $ref: "#/components/responses/Forbidden"
+        404:
+          $ref: "#/components/responses/NotFound"
+        default:
+          $ref: "#/components/responses/DefaultError"
+  /projects/{projectId}/messages/{messageId}:
+    get:
+      tags:
+        - Chat Messages
+      description: Get a specific message from a project.
+      parameters:
+        - name: projectId
+          in: path
+          description: The ID of the project.
+          required: true
+          schema:
+            type: string
+        - name: messageId
+          in: path
+          description: The ID of the message.
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Message returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Message"
+        400:
+          $ref: "#/components/responses/BadRequest"
+        401:
+          $ref: "#/components/responses/NotAuthenticated"
+        403:
+          $ref: "#/components/responses/Forbidden"
+        404:
+          $ref: "#/components/responses/NotFound"
+        default:
+          $ref: "#/components/responses/DefaultError"
+    delete:
+      tags:
+        - Chat Messages
+      description: Delete a message from a project.
+      parameters:
+        - name: projectId
+          in: path
+          description: The ID of the project.
+          required: true
+          schema:
+            type: string
+        - name: messageId
+          in: path
+          description: The ID of the message.
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Message deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Message"
+        400:
+          $ref: "#/components/responses/BadRequest"
+        401:
+          $ref: "#/components/responses/NotAuthenticated"
+        403:
+          $ref: "#/components/responses/Forbidden"
+        404:
+          $ref: "#/components/responses/NotFound"
+        default:
+          $ref: "#/components/responses/DefaultError"
+  /webhooks:
+    get:
+      tags:
+        - Webhooks
+      description: List all webhooks for the company.
+      parameters:
+        - $ref: "#/components/parameters/paginationMode"
+        - $ref: "#/components/parameters/paginationOffset"
+        - $ref: "#/components/parameters/paginationLimit"
+        - $ref: "#/components/parameters/paginationStartAfter"
+      responses:
+        200:
+          description: List returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WebhooksList"
+        400:
+          $ref: "#/components/responses/BadRequest"
+        401:
+          $ref: "#/components/responses/NotAuthenticated"
+        415:
+          $ref: "#/components/responses/InvalidContent"
+        default:
+          $ref: "#/components/responses/DefaultError"
+    post:
+      tags:
+        - Webhooks
+      description: Create a new webhook subscription.
+      requestBody:
+        description: Webhook configuration
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateWebhook"
+        required: true
+      responses:
+        200:
+          description: Webhook created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Webhook"
+        400:
+          $ref: "#/components/responses/BadRequest"
+        401:
+          $ref: "#/components/responses/NotAuthenticated"
+        415:
+          $ref: "#/components/responses/InvalidContent"
+        default:
+          $ref: "#/components/responses/DefaultError"
+  /webhooks/{webhookId}:
+    get:
+      tags:
+        - Webhooks
+      description: Retrieve a specific webhook configuration.
+      parameters:
+        - name: webhookId
+          in: path
+          description: The ID of the webhook.
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Webhook returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Webhook"
+        400:
+          $ref: "#/components/responses/BadRequest"
+        401:
+          $ref: "#/components/responses/NotAuthenticated"
+        404:
+          $ref: "#/components/responses/NotFound"
+        default:
+          $ref: "#/components/responses/DefaultError"
+    put:
+      tags:
+        - Webhooks
+      description: Update an existing webhook configuration.
+      parameters:
+        - name: webhookId
+          in: path
+          description: The ID of the webhook.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Updated webhook configuration
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateWebhook"
+        required: true
+      responses:
+        200:
+          description: Webhook updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Webhook"
+        400:
+          $ref: "#/components/responses/BadRequest"
+        401:
+          $ref: "#/components/responses/NotAuthenticated"
+        404:
+          $ref: "#/components/responses/NotFound"
+        default:
+          $ref: "#/components/responses/DefaultError"
+    delete:
+      tags:
+        - Webhooks
+      description: Delete a webhook subscription.
+      parameters:
+        - name: webhookId
+          in: path
+          description: The ID of the webhook.
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Webhook deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Webhook"
+        400:
+          $ref: "#/components/responses/BadRequest"
+        401:
+          $ref: "#/components/responses/NotAuthenticated"
+        404:
+          $ref: "#/components/responses/NotFound"
+        default:
+          $ref: "#/components/responses/DefaultError"
 components:
   responses:
     BadRequest:
@@ -1665,6 +2114,276 @@ components:
           type: string
           description: Comment that is shown for the time entry
           example: I was stuck in traffic
+
+    Task:
+      type: object
+      description: A task in a project
+      properties:
+        id:
+          type: string
+          description: Unique task ID
+          example: e2d33bcc-6f8a-46c9-9d55-2d0ed7af82f0
+        projectId:
+          type: string
+          description: Unique project ID
+          example: 044337df-e9fd-48bc-8f2e-dadd6bc09629
+        companyId:
+          type: string
+          description: ID of the company the task belongs to
+          example: 19b8ba22-97d0-4e73-9667-ebeb1b487525
+        title:
+          type: string
+          description: Title of the task
+          example: adfsdf
+        description:
+          type: string
+          description: Detailed description of the task
+          nullable: true
+        assigneeId:
+          type: string
+          description: Unique user ID of user that is assigned to the task
+          nullable: true
+        assignee:
+          type: string
+          description: Name of the assigned user
+          nullable: true
+        creatorId:
+          type: string
+          description: Unique user ID of user that created the task
+          example: HVU9tHEyejVh8fiBfbyj99zfpjq1
+        lastChangeByUser:
+          type: string
+          description: Unique user ID of last user that edited task
+          example: HVU9tHEyejVh8fiBfbyj99zfpjq1
+        createdTimestamp:
+          type: number
+          description: Timestamp of creation time (seconds since UNIX epoch)
+          example: 1736452742
+        lastEditedTimestamp:
+          type: number
+          description: Timestamp of last edit (seconds since UNIX epoch)
+          example: 1736452750
+        deadlineTimestamp:
+          type: number
+          description: Timestamp when the task is due (seconds since UNIX epoch)
+          nullable: true
+        repeatType:
+          type: string
+          description: How the task should repeat
+          enum: [NEVER, DAILY, WEEKLY, MONTHLY, YEARLY]
+          example: NEVER
+        done:
+          type: boolean
+          description: Whether the task is marked as done
+          example: true
+        isDeleted:
+          type: boolean
+          description: Whether the task has been deleted
+          example: true
+
+    TasksList:
+      required:
+        - tasks
+      type: object
+      properties:
+        tasks:
+          type: array
+          items:
+            $ref: "#/components/schemas/Task"
+
+    CreateTask:
+      required:
+        - title
+      type: object
+      properties:
+        title:
+          type: string
+          description: Title of the task
+          example: Fix the leaking pipe
+        description:
+          type: string
+          description: Detailed description of the task
+          nullable: true
+        assigneeId:
+          type: string
+          description: Unique user ID of user that should be assigned to the task
+          nullable: true
+
+    UpdateTask:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Title of the task
+          example: Fix the leaking pipe
+        description:
+          type: string
+          description: Detailed description of the task
+          nullable: true
+        assigneeId:
+          type: string
+          description: Unique user ID of user that should be assigned to the task
+          nullable: true
+        deadlineTimestamp:
+          type: number
+          description: Timestamp when the task is due (seconds since UNIX epoch)
+          nullable: true
+        repeatType:
+          type: string
+          description: How the task should repeat
+          enum: [NEVER, DAILY, WEEKLY, MONTHLY, YEARLY]
+        done:
+          type: boolean
+          description: Whether the task is marked as done
+
+    Message:
+      type: object
+      description: A chat message in a project
+      properties:
+        id:
+          type: string
+          description: Unique message ID
+          example: "-OILSwO3kfee8Gr2rPK7"
+        projectId:
+          type: string
+          description: ID of the project this message belongs to
+          example: "e9182558-fe82-4b57-8bda-50ae1ae72364"
+        author:
+          type: string
+          description: Name of the message author
+          example: "Crafty the Robot"
+        authorId:
+          type: string
+          description: Unique user ID of the message author
+          example: "HVU9tHEyejVh8kiBfbyj99zfpjq1"
+        content:
+          type: string
+          description: Content of the message
+          example: "New Message"
+        messageType:
+          type: string
+          description: Type of the message
+          enum: ["TEXT"]
+          example: "TEXT"
+        status:
+          type: string
+          description: Status of the message
+          enum: ["read", "sent"]
+          example: "read"
+        timestamp:
+          type: number
+          description: Creation timestamp (seconds since UNIX epoch)
+          example: 1738764961
+        deleted:
+          type: boolean
+          description: Whether the message has been deleted
+          example: true
+        deletedTimestamp:
+          type: number
+          description: Timestamp when the message was deleted (seconds since UNIX epoch)
+          example: 1738765339
+          nullable: true
+
+    MessagesList:
+      required:
+        - messages
+      type: object
+      properties:
+        messages:
+          type: array
+          items:
+            $ref: "#/components/schemas/Message"
+
+    CreateMessage:
+      required:
+        - content
+        - messageType
+      type: object
+      properties:
+        content:
+          type: string
+          description: Content of the message
+          example: "New Message"
+        messageType:
+          type: string
+          description: Type of the message
+          enum: ["TEXT"]
+          example: "TEXT"
+
+    Webhook:
+      type: object
+      description: A webhook subscription configuration
+      properties:
+        id:
+          type: string
+          description: Unique webhook ID
+          example: "webhook-123456"
+        event:
+          type: string
+          description: The event type this webhook is subscribed to
+          enum: ["project.created", "task.created", "trackedTime.created", "message.created", "file.created"]
+          example: "project.created"
+        url:
+          type: string
+          description: The URL that will receive the webhook payload
+          example: "https://example.com/webhook"
+        headers:
+          type: object
+          description: Custom headers to be sent with the webhook request
+          additionalProperties:
+            type: string
+          example: {"X-Custom-Header": "custom-value"}
+
+    WebhooksList:
+      required:
+        - webhooks
+      type: object
+      properties:
+        webhooks:
+          type: array
+          items:
+            $ref: "#/components/schemas/Webhook"
+            
+    CreateWebhook:
+      required:
+        - event
+        - url
+      type: object
+      properties:
+        event:
+          type: string
+          description: The event type to subscribe to
+          enum: ["project.created", "task.created", "trackedTime.created", "message.created", "file.created"]
+          example: "project.created"
+        url:
+          type: string
+          description: The URL that will receive the webhook payload
+          example: "https://example.com/webhook"
+        headers:
+          type: object
+          description: Custom headers to be sent with the webhook request
+          additionalProperties:
+            type: string
+          example: {"X-Custom-Header": "custom-value"}
+          
+    UpdateWebhook:
+      type: object
+      properties:
+        event:
+          type: string
+          description: The event type to subscribe to
+          enum: ["project.created", "task.created", "trackedTime.created", "message.created", "file.created"]
+          example: "project.created"
+        url:
+          type: string
+          description: The URL that will receive the webhook payload
+          example: "https://example.com/webhook"
+        headers:
+          type: object
+          description: Custom headers to be sent with the webhook request
+          additionalProperties:
+            type: string
+          example: {"X-Custom-Header": "custom-value"}
 
   securitySchemes:
     ApiKeyAuth:
