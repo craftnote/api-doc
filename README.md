@@ -231,6 +231,81 @@ A work time can have the following states:
 
 * The `workTypeId` refers to the `workTypes` that can be accessed from the company settings.
 
+## Webhooks
+Webhooks allow you to receive real-time notifications when events occur in your Craftnote account. When an event happens, Craftnote sends an HTTP POST request to the URL you've configured for your webhook.
+
+### Webhook Payload Structure
+When an event occurs, Craftnote sends a JSON payload to your webhook URL with the following structure:
+
+```json
+{
+  "event": "resource.action",
+  "timestamp": 1741172456,
+  "action": "created",
+  "resourceId": "resource-type/resource-id",
+  "fieldPath": "$",
+  "data": {
+    // The complete resource data
+  },
+  "previousData": null
+}
+```
+
+- `event`: A string in the format "resource.action" that identifies what happened
+- `timestamp`: Unix timestamp (seconds since epoch) when the event occurred
+- `action`: The type of action that triggered the event (currently only "created" is supported)
+- `resourceId`: A string identifying the resource that was affected, in the format "resource-type/id"
+- `fieldPath`: Path to the field that was changed ($ represents the entire resource)
+- `data`: The complete current state of the resource
+- `previousData`: The previous state of the resource (null for creation events)
+
+### Supported Events
+Currently, only creation events are supported for the following resources:
+
+#### Project Events
+- `project.created`: Triggered when a new project is created
+
+#### Task Events
+- `task.created`: Triggered when a new task is created
+
+#### Chat Message Events
+- `message.created`: Triggered when a new chat message is posted
+
+#### Time Tracking Events
+- `trackedTime.created`: Triggered when a new time entry is created
+
+#### File Events
+- `file.created`: Triggered when a new file is uploaded
+
+### Example Webhook Payload
+Here's an example of a webhook payload for a task creation event:
+
+```json
+{
+  "event": "task.created",
+  "timestamp": 1741172456,
+  "action": "created",
+  "resourceId": "tasks/3db95e59-2be3-45e1-9858-9c56945e526a",
+  "fieldPath": "$",
+  "data": {
+    "id": "3db95e59-2be3-45e1-9858-9c56945e526a",
+    "title": "New Task",
+    "projectId": "044337df-e9fd-48bc-8f2e-dadd6bc09629",
+    "creatorId": "HVU9tHEyejVh8fiBfbyj99zfpjq1",
+    "companyId": "19b8ba22-97d0-4e73-96f7-ebeb1b487525",
+    "description": "This is a test task",
+    "createdTimestamp": 1741172456,
+    "assigneeId": "HVU9tHEyejVh8fiBfbyj99zfpjq1",
+    "assignee": "McCraftFace, Crafty",
+    "lastChangeByUser": "HVU9tHEyejVh8fiBfbyj99zfpjq1",
+    "lastEditedTimestamp": 1741172456,
+    "isDeleted": false
+  },
+  "previousData": null
+}
+```
+
+The structure of the `data` field will match the corresponding resource schema as defined in the API documentation.
 
 ## Accessing Company Members
 ### List all members
