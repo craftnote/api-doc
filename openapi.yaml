@@ -2321,7 +2321,19 @@ components:
         event:
           type: string
           description: The event type this webhook is subscribed to
-          enum: ["project.created", "task.created", "trackedTime.created", "message.created", "file.created"]
+          enum:
+            - "project.created"
+            - "project.updated"
+            - "schedule.created"
+            - "schedule.deleted"
+            - "task.created"
+            - "task.updated"
+            - "trackedTime.created"
+            - "trackedTime.updated"
+            - "message.created"
+            - "file.created"
+            - "file.updated"
+            - "file.deleted"
           example: "project.created"
         url:
           type: string
@@ -2353,7 +2365,19 @@ components:
         event:
           type: string
           description: The event type to subscribe to
-          enum: ["project.created", "task.created", "trackedTime.created", "message.created", "file.created"]
+          enum:
+            - "project.created"
+            - "project.updated"
+            - "schedule.created"
+            - "schedule.deleted"
+            - "task.created"
+            - "task.updated"
+            - "trackedTime.created"
+            - "trackedTime.updated"
+            - "message.created"
+            - "file.created"
+            - "file.updated"
+            - "file.deleted"
           example: "project.created"
         url:
           type: string
@@ -2372,7 +2396,19 @@ components:
         event:
           type: string
           description: The event type to subscribe to
-          enum: ["project.created", "task.created", "trackedTime.created", "message.created", "file.created"]
+          enum:
+            - "project.created"
+            - "project.updated"
+            - "schedule.created"
+            - "schedule.deleted"
+            - "task.created"
+            - "task.updated"
+            - "trackedTime.created"
+            - "trackedTime.updated"
+            - "message.created"
+            - "file.created"
+            - "file.updated"
+            - "file.deleted"
           example: "project.created"
         url:
           type: string
