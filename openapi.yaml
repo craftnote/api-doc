@@ -226,6 +226,14 @@ paths:
           description: Numbers of items to return (maximum 100)
           schema:
             type: integer
+        - name: status
+          in: query
+          description: Filter projects by status
+          schema:
+            type: string
+            enum:
+              - active
+              - archived
       responses:
         200:
           description: List returned successfully
