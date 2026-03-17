@@ -30,7 +30,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/MembersList"
+                $ref: "#/components/schemas/CompanyMembersList"
         400:
           $ref: '#/components/responses/BadRequest'
         401:
@@ -201,7 +201,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Member"
+                $ref: "#/components/schemas/CompanyMember"
         400:
           $ref: '#/components/responses/BadRequest'
         401:
@@ -556,7 +556,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/MembersList'
+                $ref: '#/components/schemas/ProjectMembersList'
         400:
           $ref: '#/components/responses/BadRequest'
         401:
@@ -589,7 +589,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/MembersList'
+                $ref: '#/components/schemas/ProjectMembersList'
         400:
           $ref: '#/components/responses/BadRequest'
         401:
@@ -625,7 +625,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Member'
+                $ref: '#/components/schemas/ProjectMember'
         400:
           $ref: '#/components/responses/BadRequest'
         401:
@@ -1346,8 +1346,6 @@ paths:
           $ref: "#/components/responses/NotAuthenticated"
         404:
           $ref: "#/components/responses/NotFound"
-        default:
-          $ref: "#/components/responses/DefaultError"
 components:
   responses:
     BadRequest:
@@ -1922,9 +1920,9 @@ components:
           type: string
           description: Unique ID of the member
           example: Ka3gh32ashtQJuuas9
-    Member:
+    CompanyMember:
       type: object
-      description: A user represented as member inside a company or project
+      description: A user represented as member inside a company
       properties:
         id:
           type: string
@@ -1946,7 +1944,35 @@ components:
           type: string
           description: Surname of the user
           example: Gauss
-    MembersList:
+        role:
+          type: string
+          description: Role of the user, one of OWNER|SUPERVISOR|EMPLOYEE
+          example: OWNER
+    ProjectMember:
+      type: object
+      description: A user represented as member inside a project
+      properties:
+        id:
+          type: string
+          description: Unique user ID
+          example: Ka3gh32ashtQJuuas9
+        email:
+          type: string
+          description: The user's e-mail address
+          example: cf@gauss.de
+        mobile:
+          type: string
+          description: The user's mobile phone number
+          example: "+49-171-174282137"
+        name:
+          type: string
+          description: Given name of the user
+          example: Carl-Friedrich
+        lastname:
+          type: string
+          description: Surname of the user
+          example: Gauss
+    CompanyMembersList:
       required:
         - members
       type: object
@@ -1954,7 +1980,16 @@ components:
         members:
           type: array
           items:
-            $ref: "#/components/schemas/Member"
+            $ref: "#/components/schemas/CompanyMember"
+    ProjectMembersList:
+      required:
+        - members
+      type: object
+      properties:
+        members:
+          type: array
+          items:
+            $ref: "#/components/schemas/ProjectMember"
     Time:
       type: object
       description: A time entry for a project
