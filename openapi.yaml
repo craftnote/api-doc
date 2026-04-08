@@ -456,8 +456,7 @@ paths:
             type: string
         - name: download
           in: query
-          description: Whether to download this file. If selected the response will
-            contain the file content instead of its meta data.
+          description: Whether to download this file. If selected the response will contain the file content instead of its meta data.
           schema:
             type: boolean
       responses:
@@ -476,6 +475,8 @@ paths:
             application/pdf:
               schema:
                 $ref: '#/components/schemas/File'
+        302:
+          description: File content returned if download=true
         400:
           $ref: '#/components/responses/BadRequest'
         401:
