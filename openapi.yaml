@@ -117,7 +117,7 @@ paths:
             type: string
         - name: insertAfter
           in: query
-          description: Per default the newly created project status gets inserted at the beginning of the list. Using this parameter the status can get inserted after any existing status by setting this parameter to the ID of the existing status.
+          description: Per default the newly created project status get inserted at the beginning of the list. Using this parameter the status can get inserted after any existing status by setting this parameter to the ID of the existing status.
           required: false
           schema:
             type: string
@@ -456,7 +456,7 @@ paths:
             type: string
         - name: download
           in: query
-          description: Whether to download this file. If selected the response will contain the file content instead of its meta data.
+          description: Whether to download this file. If selected, the response will issue a redirect that contains the file content instead of its meta data.
           schema:
             type: boolean
       responses:
