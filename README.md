@@ -274,6 +274,9 @@ Currently, only creation events are supported for the following resources:
 #### Time Tracking Events
 - `trackedTime.created`: Triggered when a new time entry is created
 
+#### Schedule Events
+- `scheduleEntry.created`: Triggered when a new planning board schedule entry is created
+
 #### File Events
 - `file.created`: Triggered when a new file is uploaded
 
