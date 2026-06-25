@@ -1,5 +1,6 @@
 # Craftnote Public API
 The Craftnote Public API allows you to manage data in Craftnote via HTTP REST.
+The API is reachable under https://functions.craftnote.cloud/api/v1/
 
 ## Swagger Definition
 You can explore the API via the included [Open API 3.0 definition](https://raw.githubusercontent.com/craftnote/api-doc/master/openapi.yaml). Simply navigate to [editor.swagger.io](https://editor.swagger.io), press File ▸ Import URL and enter the [URL of the Open API definition](https://raw.githubusercontent.com/craftnote/api-doc/master/openapi.yaml).
