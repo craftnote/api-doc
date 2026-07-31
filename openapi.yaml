@@ -328,6 +328,39 @@ paths:
           $ref: '#/components/responses/NotFound'
         default:
           $ref: '#/components/responses/DefaultError'
+    patch:
+      tags:
+        - Projects
+      description: Partially update a project. Only fields provided in the request body are changed; omitted fields keep their current values.
+      parameters:
+        - name: projectId
+          in: path
+          description: ID of the project
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Fields to update
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateProject'
+        required: true
+      responses:
+        200:
+          description: Project updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/NotAuthenticated'
+        404:
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/DefaultError'
   /projects/{projectId}/deeplink:
     get:
       tags:
@@ -1637,7 +1670,104 @@ components:
           example: 0000FFB2-9DC1-4A50-A8BB-14C899CC52FC
         parentProject:
           type: string
-          description: Parent project ID (only applies to type PROJECT)
+          nullable: true
+          description: Parent project ID (only applies to type PROJECT). Set to null to remove the project from its folder.
+        archived:
+          type: boolean
+          description: Wether this project should be archived for all non-external members
+          example: false
+    UpdateProject:
+      type: object
+      description: Partial project update. Only fields provided are changed; omitted fields keep their current values.
+      properties:
+        name:
+          type: string
+          description: Name of this project
+          example: Wasserrohrbruch
+        projectType:
+          type: string
+          description: Project type ('FOLDER' or 'PROJECT')
+          example: FOLDER
+        startDate:
+          type: integer
+          description: Start timestamp (seconds since UNIX epoch)
+          example: 1575158400
+        endDate:
+          type: integer
+          description: End timestamp (seconds since UNIX epoch)
+          example: 1588291200
+        orderNumber:
+          type: string
+          description: Order number for this project
+          example: 92a032as4.853-af62
+        street:
+          type: string
+          description: Street and address number of the project location
+          example: Bergstraße. 40
+        zipcode:
+          type: string
+          description: ZIP code of the project location
+          example: "12345"
+        city:
+          type: string
+          description: City of the project location
+          example: Amseldorf
+        country:
+          type: string
+          description: Country name of the project location
+          example: Deutschland
+        clientName:
+          type: string
+          description: Name of the client
+          example: Karlheinz Maier
+        clientEmail:
+          type: string
+          description: E-Mail address of the client
+          example: kh-maier@t-online.de
+        clientPhone:
+          type: string
+          description: Phone number of the client
+          example: +49-170-1611937
+        billingName:
+          type: string
+          description: Name of the billing address
+          example: Dietmar Müller
+        billingStreet:
+          type: string
+          description: Street and address number of the billing address
+          example: Birkenallee 16a
+        billingZipcode:
+          type: string
+          description: ZIP code of the billing address
+          example: "32455"
+        billingCity:
+          type: string
+          description: City of the billing address
+          example: Krehlingen
+        billingCountry:
+          type: string
+          description: Country of the billing address
+          example: Germany
+        billingEmail:
+          type: string
+          description: E-mail address of the billing address
+          example: d.mueller@mail.org
+        contacts:
+          type: array
+          description: List of additional contacts
+          items:
+            $ref: '#/components/schemas/Contact'
+        noteContent:
+          type: string
+          description: User definable note
+        statusId:
+          type: string
+          description: project status ID (from /company/settings)
+          example: 0000FFB2-9DC1-4A50-A8BB-14C899CC52FC
+        parentProject:
+          type: string
+          nullable: true
+          description: Parent project ID (only applies to type PROJECT). Set to null to remove the project from its folder.
         archived:
           type: boolean
           description: Wether this project should be archived for all non-external members
