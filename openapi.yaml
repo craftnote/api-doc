@@ -2490,8 +2490,8 @@ components:
           enum:
             - "project.created"
             - "project.updated"
-            - "schedule.created"
-            - "schedule.deleted"
+            - "scheduleEntry.created"
+            - "scheduleEntry.deleted"
             - "task.created"
             - "task.updated"
             - "trackedTime.created"
@@ -2534,8 +2534,8 @@ components:
           enum:
             - "project.created"
             - "project.updated"
-            - "schedule.created"
-            - "schedule.deleted"
+            - "scheduleEntry.created"
+            - "scheduleEntry.deleted"
             - "task.created"
             - "task.updated"
             - "trackedTime.created"
@@ -2565,8 +2565,8 @@ components:
           enum:
             - "project.created"
             - "project.updated"
-            - "schedule.created"
-            - "schedule.deleted"
+            - "scheduleEntry.created"
+            - "scheduleEntry.deleted"
             - "task.created"
             - "task.updated"
             - "trackedTime.created"
