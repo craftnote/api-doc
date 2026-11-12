@@ -226,6 +226,12 @@ paths:
           description: Numbers of items to return (maximum 100)
           schema:
             type: integer
+        - name: status
+          in: query
+          description: Only return projects with this status. Use `active` to get only active projects or `archived` to get only archived projects. Deleted projects are in neither list. Without this parameter all projects are returned, including deleted ones (see the `deleted` field).
+          schema:
+            type: string
+            enum: [active, archived]
       responses:
         200:
           description: List returned successfully
@@ -1966,6 +1972,10 @@ components:
         archived:
           type: boolean
           description: Wether this project is archived for all non-external members
+          example: false
+        deleted:
+          type: boolean
+          description: Whether this project has been deleted. Deleted projects can still be restored by the customer, so they stay available in the API. This field is read-only.
           example: false
     ProjectsList:
       required:
